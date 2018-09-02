@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <title>ADR Viewer - adr-viewer</title>
+
+        <style type="text/css">
+            body {
+                display: grid;
+                width: auto;
+                height: auto;
+                align-items: center;
+                justify-items: center;
+                grid-template-rows: 2fr minmax(80%, auto) 2fr;
+            }
+
+            @media only screen and (min-width: 1025px) {
+                body {
+                    grid-template-columns: 1fr 3fr 1fr;
+                }
+
+                header, .panel-group, footer {
+                    grid-column: 2;
+                }
+            }
+
+            .panel-group {
+                width: 100%
+            }
+
+            .panel-heading.adr-accepted {
+                background-color: lightgreen;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>ADR Viewer - adr-viewer</h1>
+        </header>
+        <div class="panel-group">
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-accepted">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse0">1. Record architecture decisions</a>
+                    </h4>
+                </div>
+                <div id="collapse0" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>1. Record architecture decisions</h1>
+<p>Date: 2018-09-02</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>We need to record the architectural decisions made on this project.</p>
+<h2>Decision</h2>
+<p>We will use Architecture Decision Records, as <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">described by Michael Nygard</a>.</p>
+<h2>Consequences</h2>
+<p>See Michael Nygard's article, linked above. For a lightweight ADR toolset, see Nat Pryce's <a href="https://github.com/npryce/adr-tools">adr-tools</a>.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-accepted">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">2. Expose command line interface</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>2. Expose command line interface</h1>
+<p>Date: 2018-09-02</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>We want to maximise the usability of adr-viewer whilst maintaining flexibility in future for other output formats, e.g. a live webserver.</p>
+<h2>Decision</h2>
+<p>The entry point for this project will be a command-line utility called <code>adr-viewer</code>. We will use the python <a href="http://click.pocoo.org/5/">click</a> library to provide command-line options and documentation.</p>
+<h2>Consequences</h2>
+<p>Click will be added as a dependency, and further improvements should consider the user experience of the command-line interface.</p>
+</div>
+                </div>
+            </div>
+            
+        </div>
+        <footer>
+            Generated with <3 using ADR Viewer
+        </footer>
+    </body>
+</html>

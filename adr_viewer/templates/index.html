@@ -8,17 +8,40 @@
         <title>ADR Viewer - {{ config.project_title }}</title>
 
         <style type="text/css">
+            body {
+                display: grid;
+                width: auto;
+                height: auto;
+                align-items: center;
+                justify-items: center;
+                grid-template-rows: 2fr minmax(80%, auto) 2fr;
+            }
+
+            @media only screen and (min-width: 1025px) {
+                body {
+                    grid-template-columns: 1fr 3fr 1fr;
+                }
+
+                header, .panel-group, footer {
+                    grid-column: 2;
+                }
+            }
+
+            .panel-group {
+                width: 100%
+            }
 
             .panel-heading.adr-accepted {
                 background-color: lightgreen;
             }
-
         </style>
     </head>
     <body>
+        <header>
+            <h1>ADR Viewer - {{ config.project_title }}</h1>
+        </header>
         <div class="panel-group">
             {% for adr_record in config.records %}
-
             <div class="panel panel-default">
                 <div class="panel-heading adr-{{ adr_record.status }}">
                     <h4 class="panel-title">
@@ -29,9 +52,10 @@
                     <div class="panel-body">{{ adr_record.body|safe }}</div>
                 </div>
             </div>
-
-
             {% endfor %}
         </div>
+        <footer>
+            Generated with <3 using ADR Viewer
+        </footer>
     </body>
 </html>

@@ -3,6 +3,7 @@ import mistune
 import os
 from bs4 import BeautifulSoup
 from jinja2 import Environment, PackageLoader, select_autoescape
+import click
 
 
 def parse_adr_to_config(path):
@@ -35,15 +36,15 @@ def render_html(config):
     return template.render(config=config)
 
 
-def get_adr_files():
-    files = glob.glob('doc/adr/*.md')
+def get_adr_files(path):
+    files = glob.glob(path)
     files.sort()
     return files
 
 
-def generate_content():
+def generate_content(path):
 
-    files = get_adr_files()
+    files = get_adr_files("%s/*.md" % path)
 
     config = {
         'project_title': os.path.basename(os.getcwd()),
@@ -61,5 +62,11 @@ def generate_content():
     return render_html(config)
 
 
-def main():
-    print(generate_content())
+@click.command()
+@click.option('--adr-path', default='doc/adr/',  help='Directory containing ADR files.')
+@click.option('--output',   default='index.html', help='File to write output to.')
+def main(adr_path, output):
+    content = generate_content(adr_path)
+
+    with open(output, 'w') as out:
+        out.write(content)

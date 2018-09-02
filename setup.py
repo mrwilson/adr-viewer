@@ -17,7 +17,8 @@ setup(
         'click',
         'mistune',
         'bs4',
-        'jinja2'
+        'jinja2',
+        'bottle'
     ),
     package_data={
         'adr_viewer': ['templates/index.html'],

@@ -4,6 +4,7 @@ import os
 from bs4 import BeautifulSoup
 from jinja2 import Environment, PackageLoader, select_autoescape
 import click
+from bottle import Bottle, run
 
 
 def parse_adr_to_config(path):
@@ -42,6 +43,13 @@ def get_adr_files(path):
     return files
 
 
+def run_server(content):
+    print('Starting server at http://localhost:8000/')
+    app = Bottle()
+    app.route('/', 'GET', lambda: content)
+    run(app, host='localhost', port=8000, quiet=True)
+
+
 def generate_content(path):
 
     files = get_adr_files("%s/*.md" % path)
@@ -63,10 +71,14 @@ def generate_content(path):
 
 
 @click.command()
-@click.option('--adr-path', default='doc/adr/',  help='Directory containing ADR files.', show_default=True)
-@click.option('--output',   default='index.html', help='File to write output to.', show_default=True)
-def main(adr_path, output):
+@click.option('--adr-path', default='doc/adr/',   help='Directory containing ADR files.',         show_default=True)
+@click.option('--output',   default='index.html', help='File to write output to.',                show_default=True)
+@click.option('--serve',    default=False,        help='Serve content at http://localhost:8000/', is_flag=True)
+def main(adr_path, output, serve):
     content = generate_content(adr_path)
 
-    with open(output, 'w') as out:
-        out.write(content)
+    if serve:
+        run_server(content)
+    else:
+        with open(output, 'w') as out:
+            out.write(content)

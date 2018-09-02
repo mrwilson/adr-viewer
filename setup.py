@@ -1,12 +1,15 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name='adr-viewer',
-
     url='https://github.com/mrwilson/adr-viewer',
-    version='1.0.0',
+    version='1.0.1',
     description='A visualisation tool for Architecture Decision Records',
-
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author='Alex Wilson',
     author_email='a.wilson@alumni.warwick.ac.uk',
     license='MIT',

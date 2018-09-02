@@ -13,6 +13,14 @@ Show off your Architecture Decision Records with an easy-to-navigate web page, e
 
 ## Installation
 
+### From PyPI
+
+```bash
+$ pip install adr-viewer
+```
+
+### From local build
+
 adr-viewer requires Python 2.7 (with Pip)
 
 ```bash

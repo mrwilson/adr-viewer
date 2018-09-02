@@ -5,7 +5,7 @@ setup(
 
     url='https://github.com/mrwilson/adr-viewer',
     version='0.1.0',
-    description='A visualisation tool for Architecture Design Records',
+    description='A visualisation tool for Architecture Decision Records',
 
     author='Alex Wilson',
     author_email='a.wilson@alumni.warwick.ac.uk',

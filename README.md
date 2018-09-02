@@ -2,14 +2,14 @@
 
 [![Build Status](https://travis-ci.org/mrwilson/adr-viewer.svg?branch=master)](https://travis-ci.org/mrwilson/adr-viewer)
 
-Show off your Architecture Design Records with an easy-to-navigate web page.
+Show off your Architecture Decision Records with an easy-to-navigate web page.
 
 ## Examples
 
 <img src="example.png" height="500px"/>
 
 * Example above using Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools) project
-* This project exposes its own Architecture Design Records [here](https://mrwilson.github.io/adr-viewer/index.html)
+* This project exposes its own Architecture Decision Records [here](https://mrwilson.github.io/adr-viewer/index.html)
 
 ## Installation
 

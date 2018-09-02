@@ -16,6 +16,7 @@ setup(
     install_requires=(
         'mistune',
         'bs4',
+        'jinja2'
     ),
     package_data={
         'adr_viewer': ['templates/index.html'],

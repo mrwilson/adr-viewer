@@ -26,4 +26,9 @@ setup(
     entry_points={
         'console_scripts': ['adr-viewer=adr_viewer:main']
     },
+    classifiers=[
+        'License :: OSI Approved :: MIT License',
+        'Topic :: Software Development',
+        'Topic :: Software Development :: Documentation'
+    ]
 )

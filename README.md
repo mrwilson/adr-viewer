@@ -4,9 +4,12 @@
 
 Show off your Architecture Design Records with an easy-to-navigate web page.
 
+## Examples
+
 <img src="example.png" height="500px"/>
 
-Example above using Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools) project
+* Example above using Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools) project
+* This project exposes its own Architecture Design Records [here](https://mrwilson.github.io/adr-viewer/index.html)
 
 ## Installation
 

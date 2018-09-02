@@ -63,8 +63,8 @@ def generate_content(path):
 
 
 @click.command()
-@click.option('--adr-path', default='doc/adr/',  help='Directory containing ADR files.')
-@click.option('--output',   default='index.html', help='File to write output to.')
+@click.option('--adr-path', default='doc/adr/',  help='Directory containing ADR files.', show_default=True)
+@click.option('--output',   default='index.html', help='File to write output to.', show_default=True)
 def main(adr_path, output):
     content = generate_content(adr_path)
 

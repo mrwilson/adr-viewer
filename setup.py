@@ -4,7 +4,7 @@ setup(
     name='adr-viewer',
 
     url='https://github.com/mrwilson/adr-viewer',
-    version='0.1.0',
+    version='1.0.0',
     description='A visualisation tool for Architecture Decision Records',
 
     author='Alex Wilson',

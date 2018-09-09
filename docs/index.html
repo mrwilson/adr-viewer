@@ -34,6 +34,18 @@
             .panel-heading.adr-accepted {
                 background-color: lightgreen;
             }
+
+            .panel-heading.adr-superceded {
+                background-color: lightgrey;
+            }
+
+            .panel-heading.adr-unknown {
+                background-color: white;
+            }
+
+            .adr-superceded > .panel-title > a {
+                text-decoration: line-through;
+            }
         </style>
     </head>
     <body>
@@ -80,6 +92,50 @@
 <p>The entry point for this project will be a command-line utility called <code>adr-viewer</code>. We will use the python <a href="http://click.pocoo.org/5/">click</a> library to provide command-line options and documentation.</p>
 <h2>Consequences</h2>
 <p>Click will be added as a dependency, and further improvements should consider the user experience of the command-line interface.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-superceded">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2">3. Use same colour for all headers</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>3. Use same colour for all headers</h1>
+<p>Date: 2018-09-09</p>
+<h2>Status</h2>
+<p>Superceded by <a href="0004-distinguish-superceded-records-with-colour.md">4. Distinguish superceded records with colour</a></p>
+<h2>Context</h2>
+<p><code>adr-viewer</code> presents all records with the same <code>lightgreen</code> header, even though records may be in different states.</p>
+<h2>Decision</h2>
+<p>We will keep the <code>lightgreen</code> colour for everything</p>
+<h2>Consequences</h2>
+<p>No work necessary to support ADRs superceding eachother.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-accepted">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse3">4. Distinguish superceded records with colour</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>4. Distinguish superceded records with colour</h1>
+<p>Date: 2018-09-09</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<p>Supercedes <a href="0003-use-same-colour-for-all-headers.md">3. Use same colour for all headers</a></p>
+<h2>Context</h2>
+<p><code>adr-viewer</code> presents all records with the same <code>lightgreen</code> header, even though records may be in different states.</p>
+<h2>Decision</h2>
+<p>Records marked as 'Superceded' will distinguish themselves from 'Accepted'</p>
+<h2>Consequences</h2>
+<p>We must invest time thinking about the user experience for this visual indication - whether or not simply greying out is sufficient.</p>
+<p>We must also offer a default display if logic for processing a custom linkage does not exist in this project.</p>
 </div>
                 </div>
             </div>

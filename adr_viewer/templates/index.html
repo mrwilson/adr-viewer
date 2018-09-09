@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
         <title>ADR Viewer - {{ config.project_title }}</title>
 
         <style type="text/css">
@@ -50,6 +51,10 @@
             .adr-superceded > .panel-title > a {
                 text-decoration: line-through;
             }
+
+            .adr-icon {
+                float: right;
+            }
         </style>
     </head>
     <body>
@@ -62,6 +67,17 @@
                 <div class="panel-heading adr-{{ adr_record.status }}">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#collapse{{ adr_record.index }}">{{ adr_record.title }}</a>
+
+                        {% if adr_record.status == "accepted" %}
+                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        {% elif adr_record.status == "superceded" %}
+                        <i class="adr-icon fas fa-fw fa-times"></i>
+                        {% elif adr_record.status == "amended" %}
+                        <i class="adr-icon fas fa-fw fa-arrow-down"></i>
+                        {% else %}
+                        <i class="adr-icon fas fa-fw fa-question"></i>
+                        {% endif %}
+
                     </h4>
                 </div>
                 <div id="collapse{{ adr_record.index }}" class="panel-collapse collapse">

@@ -39,6 +39,10 @@
                 background-color: lightgrey;
             }
 
+            .panel-heading.adr-amended {
+                background-color: yellow;
+            }
+
             .panel-heading.adr-unknown {
                 background-color: white;
             }
@@ -118,7 +122,7 @@
             </div>
             
             <div class="panel panel-default">
-                <div class="panel-heading adr-accepted">
+                <div class="panel-heading adr-amended">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#collapse3">4. Distinguish superceded records with colour</a>
                     </h4>
@@ -129,6 +133,7 @@
 <h2>Status</h2>
 <p>Accepted</p>
 <p>Supercedes <a href="0003-use-same-colour-for-all-headers.md">3. Use same colour for all headers</a></p>
+<p>Amended by <a href="0005-distinguish-amendments-to-records-with-colour.md">5. Distinguish amendments to records with colour</a></p>
 <h2>Context</h2>
 <p><code>adr-viewer</code> presents all records with the same <code>lightgreen</code> header, even though records may be in different states.</p>
 <h2>Decision</h2>
@@ -136,6 +141,28 @@
 <h2>Consequences</h2>
 <p>We must invest time thinking about the user experience for this visual indication - whether or not simply greying out is sufficient.</p>
 <p>We must also offer a default display if logic for processing a custom linkage does not exist in this project.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-accepted">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse4">5. Distinguish amendments to records with colour</a>
+                    </h4>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>5. Distinguish amendments to records with colour</h1>
+<p>Date: 2018-09-09</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<p>Amends <a href="0004-distinguish-superceded-records-with-colour.md">4. Distinguish superceded records with colour</a></p>
+<h2>Context</h2>
+<p>Architecture Decision Records may be <code>amended</code> rather than <code>superceded</code> if e.g. only a small part of the decision changes.</p>
+<h2>Decision</h2>
+<p>Amended records, although not officially supported as a distinct flag in <code>adr-tools</code>, should be distinguished from records that are either Accepted or Superceded by.</p>
+<h2>Consequences</h2>
+<p>We now have to map 4 kinds of status to different formatting options, which presents a refactoring opportunity.</p>
 </div>
                 </div>
             </div>

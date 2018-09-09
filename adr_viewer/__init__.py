@@ -14,7 +14,12 @@ def parse_adr_to_config(path):
 
     status = soup.find('h2', text='Status').findNext('p').text
 
-    status = 'accepted' if status == 'Accepted' else None
+    if status.startswith('Accepted'):
+        status = 'accepted'
+    elif status.startswith('Superceded by'):
+        status = 'superceded'
+    else:
+        status = 'unknown'
 
     header = soup.find('h1').text
 

@@ -19,6 +19,18 @@ def test_should_include_adr_as_html():
     assert '<h1>1. Record architecture decisions</h1>' in config['body']
 
 
+def test_should_mark_superceded_records():
+    config = parse_adr_to_config('doc/adr/0003-use-same-colour-for-all-headers.md')
+
+    assert config['status'] == 'superceded'
+
+
+def test_should_mark_unknown_records():
+    config = parse_adr_to_config('test/adr/0001-unknown-status.md')
+
+    assert config['status'] == 'unknown'
+
+
 def test_should_render_html_with_project_title():
     html = render_html({
         'project_title': 'my-project'

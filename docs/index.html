@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
         <title>ADR Viewer - adr-viewer</title>
 
         <style type="text/css">
@@ -50,6 +51,10 @@
             .adr-superceded > .panel-title > a {
                 text-decoration: line-through;
             }
+
+            .adr-icon {
+                float: right;
+            }
         </style>
     </head>
     <body>
@@ -62,6 +67,11 @@
                 <div class="panel-heading adr-accepted">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#collapse0">1. Record architecture decisions</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        
+
                     </h4>
                 </div>
                 <div id="collapse0" class="panel-collapse collapse">
@@ -83,6 +93,11 @@
                 <div class="panel-heading adr-accepted">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#collapse1">2. Expose command line interface</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        
+
                     </h4>
                 </div>
                 <div id="collapse1" class="panel-collapse collapse">
@@ -104,6 +119,11 @@
                 <div class="panel-heading adr-superceded">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#collapse2">3. Use same colour for all headers</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-times"></i>
+                        
+
                     </h4>
                 </div>
                 <div id="collapse2" class="panel-collapse collapse">
@@ -125,6 +145,11 @@
                 <div class="panel-heading adr-amended">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#collapse3">4. Distinguish superceded records with colour</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-arrow-down"></i>
+                        
+
                     </h4>
                 </div>
                 <div id="collapse3" class="panel-collapse collapse">
@@ -149,6 +174,11 @@
                 <div class="panel-heading adr-accepted">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" href="#collapse4">5. Distinguish amendments to records with colour</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        
+
                     </h4>
                 </div>
                 <div id="collapse4" class="panel-collapse collapse">

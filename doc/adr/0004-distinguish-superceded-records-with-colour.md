@@ -8,6 +8,8 @@ Accepted
 
 Supercedes [3. Use same colour for all headers](0003-use-same-colour-for-all-headers.md)
 
+Amended by [5. Distinguish amendments to records with colour](0005-distinguish-amendments-to-records-with-colour.md)
+
 ## Context
 
 `adr-viewer` presents all records with the same `lightgreen` header, even though records may be in different states.

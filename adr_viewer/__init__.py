@@ -7,16 +7,33 @@ import click
 from bottle import Bottle, run
 
 
+def extract_statuses_from_adr(page_object):
+    status_section = page_object.find('h2', text='Status')
+
+    current_node = status_section.nextSibling
+
+    while current_node.name != 'h2':
+
+        current_node = current_node.nextSibling
+
+        if current_node.name == 'p':
+            yield current_node.text
+        else:
+            continue
+
+
 def parse_adr_to_config(path):
     adr_as_html = mistune.markdown(open(path).read())
 
     soup = BeautifulSoup(adr_as_html, features='html.parser')
 
-    status = soup.find('h2', text='Status').findNext('p').text
+    status = list(extract_statuses_from_adr(soup))
 
-    if status.startswith('Accepted'):
+    if any([line.startswith("Amended by") for line in status]):
+        status = 'amended'
+    elif any([line.startswith("Accepted") for line in status]):
         status = 'accepted'
-    elif status.startswith('Superceded by'):
+    elif any([line.startswith("Superceded by") for line in status]):
         status = 'superceded'
     else:
         status = 'unknown'

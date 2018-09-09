@@ -25,6 +25,12 @@ def test_should_mark_superceded_records():
     assert config['status'] == 'superceded'
 
 
+def test_should_mark_amended_records():
+    config = parse_adr_to_config('doc/adr/0004-distinguish-superceded-records-with-colour.md')
+
+    assert config['status'] == 'amended'
+
+
 def test_should_mark_unknown_records():
     config = parse_adr_to_config('test/adr/0001-unknown-status.md')
 

@@ -8,4 +8,4 @@ script:
   - pytest
   - python setup.py install
   - adr-viewer
-  - pa11y ./index.html --include-warnings --standard Section508 --level warning
+  - pa11y ./index.html --config pa11y.json

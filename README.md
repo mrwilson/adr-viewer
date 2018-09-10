@@ -45,4 +45,4 @@ The default for `--adr-path` is `doc/adr/` because this is the default path gene
 
 ## Supported Record Types
 
-<img src="images/record_types.png" height="500px"/>
+<img src="images/record_types.png"/>

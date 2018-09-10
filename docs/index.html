@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -193,6 +193,33 @@
 <p>Amended records, although not officially supported as a distinct flag in <code>adr-tools</code>, should be distinguished from records that are either Accepted or Superceded by.</p>
 <h2>Consequences</h2>
 <p>We now have to map 4 kinds of status to different formatting options, which presents a refactoring opportunity.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-accepted">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse5">6. Accessibility as a first-class concern</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        
+
+                    </h4>
+                </div>
+                <div id="collapse5" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>6. Accessibility as a first-class concern</h1>
+<p>Date: 2018-09-10</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>This tool had, up until this point, made assumptions about how its users might interpret the information it presents (for example, using colour as the main mechanism of distinguishing record types)</p>
+<h2>Decision</h2>
+<p>Accessibility will now be a first-class concern of this project. All future design decisions should bear this in mind.</p>
+<h2>Consequences</h2>
+<p>A base level of accessibility testing has been integrated using <a href="https://github.com/pa11y/pa11y">pa11y</a>.</p>
+<p>This project should be (at minimum) run through a screen reader and tested for usability.</p>
 </div>
                 </div>
             </div>

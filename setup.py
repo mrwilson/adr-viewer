@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setup(
     name='adr-viewer',
     url='https://github.com/mrwilson/adr-viewer',
-    version='1.1.0',
+    version='1.1.1',
     description='A visualisation tool for Architecture Decision Records',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -14,7 +14,6 @@ setup(
     author_email='a.wilson@alumni.warwick.ac.uk',
     license='MIT',
     packages=find_packages(),
-    include_package_data=True,
     install_requires=(
         'click',
         'mistune',

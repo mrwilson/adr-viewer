@@ -48,6 +48,10 @@
                 background-color: white;
             }
 
+            .panel-heading.adr-pending {
+                background-color: lightblue;
+            }
+
             .adr-superceded > .panel-title > a {
                 text-decoration: line-through;
             }
@@ -74,6 +78,8 @@
                         <i class="adr-icon fas fa-fw fa-times"></i>
                         {% elif adr_record.status == "amended" %}
                         <i class="adr-icon fas fa-fw fa-arrow-down"></i>
+                        {% elif adr_record.status == "pending" %}
+                        <i class="adr-icon fas fa-fw fa-hourglass-half"></i>
                         {% else %}
                         <i class="adr-icon fas fa-fw fa-question"></i>
                         {% endif %}

@@ -37,6 +37,12 @@ def test_should_mark_unknown_records():
     assert config['status'] == 'unknown'
 
 
+def test_should_mark_pending_records():
+    config = parse_adr_to_config('test/adr/0002-pending-status.md')
+
+    assert config['status'] == 'pending'
+
+
 def test_should_render_html_with_project_title():
     html = render_html({
         'project_title': 'my-project'

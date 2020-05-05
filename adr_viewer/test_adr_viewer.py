@@ -80,3 +80,9 @@ def test_should_render_html_with_collapsible_index():
     })
 
     assert '<a data-toggle="collapse" href="#collapse123">Record 123</a>' in html
+
+
+def test_should_ignore_invalid_files():
+    config = parse_adr_to_config('test/adr/0003-bad-formatting.md')
+
+    assert config is None

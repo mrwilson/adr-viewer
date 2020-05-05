@@ -10,16 +10,16 @@ from bottle import Bottle, run
 def extract_statuses_from_adr(page_object):
     status_section = page_object.find('h2', text='Status')
 
-    current_node = status_section.nextSibling
+    if status_section and status_section.nextSibling:
+        current_node = status_section.nextSibling
 
-    while current_node.name != 'h2':
+        while current_node.name != 'h2' and current_node.nextSibling:
+            current_node = current_node.nextSibling
 
-        current_node = current_node.nextSibling
-
-        if current_node.name == 'p':
-            yield current_node.text
-        else:
-            continue
+            if current_node.name == 'p':
+                yield current_node.text
+            else:
+                continue
 
 
 def parse_adr_to_config(path):
@@ -40,14 +40,16 @@ def parse_adr_to_config(path):
     else:
         status = 'unknown'
 
-    header = soup.find('h1').text
+    header = soup.find('h1')
 
-    return {
-        'status': status,
-        'body': adr_as_html,
-        'title': header
-    }
-
+    if header:
+          return {
+                'status': status,
+                'body': adr_as_html,
+                'title': header.text
+            }
+    else:
+        return None
 
 def render_html(config):
 
@@ -87,9 +89,12 @@ def generate_content(path):
 
         adr_attributes = parse_adr_to_config(adr_file)
 
-        adr_attributes['index'] = index
+        if adr_attributes:
+            adr_attributes['index'] = index
 
-        config['records'].append(adr_attributes)
+            config['records'].append(adr_attributes)
+        else:
+            print("Could not parse %s in ADR format, ignoring." % adr_file)
 
     return render_html(config)
 

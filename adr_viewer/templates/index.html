@@ -36,7 +36,7 @@
                 background-color: lightgreen;
             }
 
-            .panel-heading.adr-superceded {
+            .panel-heading.adr-superseded {
                 background-color: lightgrey;
             }
 
@@ -52,7 +52,7 @@
                 background-color: lightblue;
             }
 
-            .adr-superceded > .panel-title > a {
+            .adr-superseded > .panel-title > a {
                 text-decoration: line-through;
             }
 
@@ -74,7 +74,7 @@
 
                         {% if adr_record.status == "accepted" %}
                         <i class="adr-icon fas fa-fw fa-check"></i>
-                        {% elif adr_record.status == "superceded" %}
+                        {% elif adr_record.status == "superseded" %}
                         <i class="adr-icon fas fa-fw fa-times"></i>
                         {% elif adr_record.status == "amended" %}
                         <i class="adr-icon fas fa-fw fa-arrow-down"></i>

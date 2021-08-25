@@ -18,6 +18,8 @@ def extract_statuses_from_adr(page_object):
 
             if current_node.name == 'p':
                 yield current_node.text
+            elif current_node.name == 'ul':
+                yield from (li.text for li in current_node.children if li.name == "li")
             else:
                 continue
 

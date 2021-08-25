@@ -4,7 +4,7 @@ Date: 2018-09-09
 
 ## Status
 
-Superceded by [4. Distinguish superceded records with colour](0004-distinguish-superceded-records-with-colour.md)
+Superseded by [4. Distinguish superseded records with colour](0004-distinguish-superseded-records-with-colour.md)
 
 ## Context
 

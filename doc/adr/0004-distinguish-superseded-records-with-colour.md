@@ -1,4 +1,4 @@
-# 4. Distinguish superceded records with colour
+# 4. Distinguish superseded records with colour
 
 Date: 2018-09-09
 
@@ -16,7 +16,7 @@ Amended by [5. Distinguish amendments to records with colour](0005-distinguish-a
 
 ## Decision
 
-Records marked as 'Superceded' will distinguish themselves from 'Accepted' 
+Records marked as 'Superseded' will distinguish themselves from 'Accepted' 
 
 ## Consequences
 

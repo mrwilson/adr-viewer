@@ -19,14 +19,14 @@ def test_should_include_adr_as_html():
     assert '<h1>1. Record architecture decisions</h1>' in config['body']
 
 
-def test_should_mark_superceded_records():
+def test_should_mark_superseded_records():
     config = parse_adr_to_config('doc/adr/0003-use-same-colour-for-all-headers.md')
 
-    assert config['status'] == 'superceded'
+    assert config['status'] == 'superseded'
 
 
 def test_should_mark_amended_records():
-    config = parse_adr_to_config('doc/adr/0004-distinguish-superceded-records-with-colour.md')
+    config = parse_adr_to_config('doc/adr/0004-distinguish-superseded-records-with-colour.md')
 
     assert config['status'] == 'amended'
 

@@ -21,7 +21,7 @@ $ pip install adr-viewer
 
 ### From local build
 
-adr-viewer requires Python 2.7 (with Pip)
+adr-viewer requires Python 3.7 or higher (with Pip)
 
 ```bash
 $ git clone https://github.com/mrwilson/adr-viewer

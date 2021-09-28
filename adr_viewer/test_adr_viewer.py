@@ -58,7 +58,7 @@ def test_should_render_html_with_record_status():
         }]
     })
 
-    assert '<div class="panel-heading adr-accepted">' in html
+    assert '<summary class="panel-heading adr-accepted">' in html
 
 
 def test_should_render_html_with_record_body():
@@ -79,7 +79,7 @@ def test_should_render_html_with_collapsible_index():
         }]
     })
 
-    assert '<a data-toggle="collapse" href="#collapse123">Record 123</a>' in html
+    assert '<a href="#collapse123">Record 123</a>' in html
 
 
 def test_should_ignore_invalid_files():

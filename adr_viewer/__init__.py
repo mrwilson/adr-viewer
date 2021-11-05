@@ -55,10 +55,7 @@ def parse_adr_to_config(path):
         return None
 
 
-template_dir_override = None
-
-
-def render_html(config):
+def render_html(config, template_dir_override=None):
 
     env = Environment(
         loader=PackageLoader('adr_viewer', 'templates') if template_dir_override is None else FileSystemLoader(template_dir_override),
@@ -83,7 +80,7 @@ def run_server(content):
     run(app, host='localhost', port=8000, quiet=True)
 
 
-def generate_content(path):
+def generate_content(path, template_dir_override=None):
 
     files = get_adr_files("%s/*.md" % path)
 
@@ -103,18 +100,16 @@ def generate_content(path):
         else:
             print("Could not parse %s in ADR format, ignoring." % adr_file)
 
-    return render_html(config)
+    return render_html(config, template_dir_override)
 
 
 @click.command()
 @click.option('--adr-path', default='doc/adr/',   help='Directory containing ADR files.',         show_default=True)
 @click.option('--output',   default='index.html', help='File to write output to.',                show_default=True)
 @click.option('--serve',    default=False,        help='Serve content at http://localhost:8000/', is_flag=True)
-@click.option('--template-dir',  default=None,    help='File to write output to.',                show_default=True)
+@click.option('--template-dir',  default=None,    help='Template directory.',                show_default=True)
 def main(adr_path, output, serve, template_dir):
-    global template_dir_override
-    template_dir_override = template_dir
-    content = generate_content(adr_path)
+    content = generate_content(adr_path, template_dir)
 
     if serve:
         run_server(content)

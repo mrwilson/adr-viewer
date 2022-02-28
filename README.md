@@ -38,6 +38,7 @@ Options:
   --adr-path TEXT  Directory containing ADR files.  [default: doc/adr/]
   --output TEXT    File to write output to.  [default: index.html]
   --serve          Serve content at http://localhost:8000/
+  --port INT       Custom server port [default: 8000]
   --help           Show this message and exit.
 ```
 

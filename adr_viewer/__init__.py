@@ -46,7 +46,7 @@ def parse_adr_to_config(path):
     header = soup.find('h1')
 
     if header:
-          return {
+        return {
                 'status': status,
                 'body': adr_as_html,
                 'title': header.text
@@ -80,15 +80,17 @@ def run_server(content, port):
     run(app, host='localhost', port=port, quiet=True)
 
 
-def generate_content(path, template_dir_override=None):
+def generate_content(path, template_dir_override=None, heading=None):
 
     files = get_adr_files("%s/*.md" % path)
 
+    if not heading:
+        heading = 'ADR Viewer - ' + os.path.basename(os.getcwd())
+
     config = {
-        'project_title': os.path.basename(os.getcwd()),
+        'heading': heading,
         'records': []
     }
-
     for index, adr_file in enumerate(files):
 
         adr_attributes = parse_adr_to_config(adr_file)
@@ -104,16 +106,20 @@ def generate_content(path, template_dir_override=None):
 
 
 @click.command()
-@click.option('--adr-path',      default='doc/adr/',   help='Directory containing ADR files.',         show_default=True)
-@click.option('--output',        default='index.html', help='File to write output to.',                show_default=True)
-@click.option('--serve',         default=False,        help='Serve content at http://localhost:8000/', is_flag=True)
-@click.option('--port',          default=8000,         help='Change port for the server',              show_default=True)
-@click.option('--template-dir',  default=None,         help='Template directory.',                     show_default=True)
-def main(adr_path, output, serve, port, template_dir):
-    content = generate_content(adr_path, template_dir)
+@click.option('--adr-path',      default='doc/adr/',      help='Directory containing ADR files.',         show_default=True)
+@click.option('--output',        default='index.html',    help='File to write output to.',                show_default=True)
+@click.option('--serve',         default=False,           help='Serve content at http://localhost:8000/', is_flag=True)
+@click.option('--port',          default=8000,            help='Change port for the server',              show_default=True)
+@click.option('--template-dir',  default=None,            help='Template directory.',                     show_default=True)
+@click.option('--heading',       default='ADR Viewer - ', help='ADR Page Heading',                        show_default=True)
+def main(adr_path, output, serve, port, template_dir, heading):
+    content = generate_content(adr_path, template_dir, heading)
 
     if serve:
         run_server(content, port)
     else:
         with open(output, 'w') as out:
             out.write(content)
+
+if __name__ == '__main__':
+    main()

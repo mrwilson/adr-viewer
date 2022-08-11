@@ -1,0 +1,23 @@
+# Configuration for adr-viewer
+# in TOML format http://toml.io
+
+title = "TOML Configuration for adr-viewer look and feel"
+
+[status]
+# Properties for the bars that display each ADR 
+
+# Accepted
+accepted.background-color   = "lightgreen"
+
+# Amended
+amended.background-color    = "yellow"
+
+# Pending
+pending.background-color    = "lightblue"
+
+# Superseded
+superseded.background-color = "lightgrey"
+superseded.text-decoration  = "line-through"
+
+# Unknown
+unknown.background-color    = "white"

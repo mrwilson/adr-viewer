@@ -33,27 +33,27 @@
             }
 
             .panel-heading.adr-accepted {
-                background-color: lightgreen;
+                background-color: {{ config.accepted['background-color'] }};
             }
 
             .panel-heading.adr-superseded {
-                background-color: lightgrey;
+                background-color: {{ config.superseded['background-color'] }};
             }
 
             .panel-heading.adr-amended {
-                background-color: yellow;
+                background-color: {{ config.amended['background-color'] }};
             }
 
             .panel-heading.adr-unknown {
-                background-color: white;
+                background-color: {{ config.unknown['background-color'] }};
             }
 
             .panel-heading.adr-pending {
-                background-color: lightblue;
+                background-color: {{ config.pending['background-color'] }};
             }
 
             .adr-superseded > .panel-title > a {
-                text-decoration: line-through;
+                text-decoration: {{ config.superseded['text-decoration'] }};
             }
 
             .adr-icon {

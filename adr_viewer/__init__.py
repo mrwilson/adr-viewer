@@ -1,5 +1,6 @@
 import os
 import glob
+from re import M
 import toml
 import ast
 
@@ -93,9 +94,9 @@ def generate_content(path, template_dir_override=None,
 
     config = {
         'heading': heading,
-        'records': []
+        'records': [],
+        'page': []
     }
-
     # Set defaults for colours (or use passed in configuration)
     conf = {}
     if type(configuration) == type(None):
@@ -107,11 +108,11 @@ def generate_content(path, template_dir_override=None,
             "background-color": "lightgrey", \
             "text-decoration": "line-through"}, \
         "unknown": {"background-color": "white"}}')
+        config['page'] = ast.literal_eval('{"background-color": "white"}')
     else:
         conf = configuration['status']
+        config['page'] = configuration['page']
 
-    print(type(conf))
-    print(conf)
     # Retrieve properties from configuration
     for status in conf:
         properties = {}
@@ -146,7 +147,7 @@ def generate_content(path, template_dir_override=None,
               help='Template directory.', show_default=True)
 @click.option('--heading',       default='ADR Viewer - ',
               help='ADR Page Heading', show_default=True)
-@click.option('--config',        default='config.toml',
+@click.option('--config',        default='config2.toml',
               help='Configuration settings', show_default=True)
 def main(adr_path, output, serve, port, template_dir, heading, config):
     from os.path import exists

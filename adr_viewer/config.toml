@@ -3,6 +3,10 @@
 
 title = "TOML Configuration for adr-viewer look and feel"
 
+[page]
+# Properties for the page
+background-color            = "white"
+
 [status]
 # Properties for the bars that display each ADR 
 

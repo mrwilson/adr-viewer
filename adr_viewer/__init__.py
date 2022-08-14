@@ -1,6 +1,5 @@
 import os
 import glob
-from re import M
 import toml
 import ast
 
@@ -35,12 +34,13 @@ def parse_adr_to_config(path):
     soup = BeautifulSoup(adr_as_html, features='html.parser')
 
     status = list(extract_statuses_from_adr(soup))
-
-    if any([line.startswith("Amended by") for line in status]):
+    if any([line.startswith("Amended") for line in status]):
         status = 'amended'
     elif any([line.startswith("Accepted") for line in status]):
         status = 'accepted'
-    elif any([line.startswith("Superseded by") for line in status]):
+    elif any([line.startswith("Superceded") for line in status]):
+        status = 'superseded'
+    elif any([line.startswith("Superseded") for line in status]):
         status = 'superseded'
     elif any([line.startswith("Pending") for line in status]):
         status = 'pending'
@@ -97,17 +97,27 @@ def generate_content(path, template_dir_override=None,
         'records': [],
         'page': []
     }
+
     # Set defaults for colours (or use passed in configuration)
     conf = {}
     if type(configuration) == type(None):
         conf = ast.literal_eval('{ \
-        "accepted": {"background-color": "lightgreen"}, \
-        "amended": {"background-color": "yellow"}, \
-        "pending": {"background-color": "lightblue"}, \
+        "accepted": { \
+            "icon": "fa-check", \
+            "background-color": "lightgreen"}, \
+        "amended": {\
+            "icon": "fa-arrow-down", \
+            "background-color": "yellow"}, \
+        "pending": { \
+            "icon": "fa-hourglass-half", \
+            "background-color": "lightblue"}, \
         "superseded": { \
+            "icon" : "fa-times",\
             "background-color": "lightgrey", \
             "text-decoration": "line-through"}, \
-        "unknown": {"background-color": "white"}}')
+        "unknown": { \
+            "icon" : "fa-question", \
+            "background-color": "white"}}')
         config['page'] = ast.literal_eval('{"background-color": "white"}')
     else:
         conf = configuration['status']
@@ -147,7 +157,7 @@ def generate_content(path, template_dir_override=None,
               help='Template directory.', show_default=True)
 @click.option('--heading',       default='ADR Viewer - ',
               help='ADR Page Heading', show_default=True)
-@click.option('--config',        default='config2.toml',
+@click.option('--config',        default='config.toml',
               help='Configuration settings', show_default=True)
 def main(adr_path, output, serve, port, template_dir, heading, config):
     from os.path import exists

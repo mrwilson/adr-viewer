@@ -11,17 +11,22 @@ background-color            = "white"
 # Properties for the bars that display each ADR 
 
 # Accepted
+accepted.icon               = "fa-check"
 accepted.background-color   = "lightgreen"
 
 # Amended
-amended.background-color    = "yellow"
+amended.icon                = "fa-arrow-down" 
+amended.background-color    = "yellow"  
 
 # Pending
+pending.icon                = "fa-hourglass-half"
 pending.background-color    = "lightblue"
 
 # Superseded
+superseded.icon             = "fa-times"
 superseded.background-color = "lightgrey"
 superseded.text-decoration  = "line-through"
 
 # Unknown
+unknown.icon                = "fa-question"
 unknown.background-color    = "white"

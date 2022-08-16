@@ -1,4 +1,30 @@
-from adr_viewer import parse_adr_to_config, render_html
+# Import system modules
+import os
+import sys
+from ast import literal_eval
+
+import pytest
+sys.path.insert(1, '..' + os.sep + 'adr_viewer')
+
+from adrviewer import parse_adr_to_config, render_html  # noqa
+
+
+@pytest.fixture
+def html_defaults():
+    defaults = literal_eval("{'page': {'background-color': 'blue'}," +
+                            "'accepted': {'icon': 'fa-check', " +
+                            "'background-color': 'lightgreen'}," +
+                            "'amended': { 'icon': 'fa-arrow-down'," +
+                            "'background-color': 'yellow'}," +
+                            "'pending': { 'icon': 'fa-hourglass-half'," +
+                            "'background-color': 'lightblue'}," +
+                            "'superseded': {'icon': 'fa-times'," +
+                            "'background-color': 'lightgrey'," +
+                            "'text-decoration': 'line-through'}," +
+                            "'unknown': {'icon': 'fa-question'," +
+                            "'background-color': 'white'}}")
+    return defaults
+
 
 def test_should_extract_title_from_record():
     config = parse_adr_to_config('../doc/adr/0001-record-architecture-decisions.md')
@@ -42,42 +68,49 @@ def test_should_mark_pending_records():
     assert config['status'] == 'pending'
 
 
-def test_should_render_html_with_project_title():
-    html = render_html({
-        'project_title': 'my-project'
-    })
+def test_should_render_html_with_project_title(html_defaults):
+    content = {
+        'heading': 'my-project'
+        }
+    content.update(html_defaults)
+    html = render_html(content)
+    assert '<title>my-project</title>' in html
 
-    assert '<title>ADR Viewer - my-project</title>' in html
 
-
-def test_should_render_html_with_record_status():
-    html = render_html({
+def test_should_render_html_with_record_status(html_defaults):
+    content = {
         'records': [{
             'status': 'accepted',
         }]
-    })
+    }
+    content.update(html_defaults)
+    html = render_html(content)
 
     assert '<div class="panel-heading adr-accepted">' in html
 
 
-def test_should_render_html_with_record_body():
-    html = render_html({
+def test_should_render_html_with_record_body(html_defaults):
+    content = {
         'records': [{
             'body': '<h1>This is my ADR</h1>',
         }]
-    })
+    }
+    content.update(html_defaults)
+    html = render_html(content)
 
     assert '<div class="panel-body"><h1>This is my ADR</h1></div>' in html
 
 
-def test_should_render_html_with_collapsible_index():
-    html = render_html({
+def test_should_render_html_with_collapsible_index(html_defaults):
+    content = {
         'records': [{
             'title': 'Record 123',
             'index': 123
         }]
-    })
-
+    }
+    content.update(html_defaults)
+    html = render_html(content)
+    
     assert '<a data-toggle="collapse" href="#collapse123">Record 123</a>' in html
 
 

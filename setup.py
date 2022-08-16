@@ -26,7 +26,7 @@ setup(
         'adr_viewer': ['templates/index.html'],
     },
     entry_points={
-        'console_scripts': ['adr-viewer=adr_viewer:main']
+        'console_scripts': ['adr-viewer=adrviewer:main']
     },
     classifiers=[
         'License :: OSI Approved :: MIT License',

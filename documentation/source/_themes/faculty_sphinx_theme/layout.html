@@ -1,0 +1,89 @@
+{% extends "sphinx_rtd_theme/layout.html" %}
+
+{# Default to Faculty favicon #}
+{% if not favicon %}
+  {% set favicon = "images/favicon.ico" %}
+{% endif %}
+{# Default to Faculty logo #}
+{% if not logo %}
+  {% set logo = "images/logo-white.svg" %}
+{% endif %}
+
+{% set css_files = css_files + [
+    "_static/css/faculty.css",
+    "https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Roboto:400,700|Roboto+Mono:400,700&display=swap"
+] %}
+
+{% macro menu_link_content(record) -%}
+{{- record.title -}}
+{%- if record.external %}<i class="fa fa-external-link"></i>{% endif -%}
+{% endmacro %}
+
+{% macro menu_link(record) %}
+{%- if record.url is defined -%}
+<a class="platform-navbar-link" href="{{ record.url }}"{% if record.external %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ menu_link_content(record) }}</a>
+{%- else -%}
+<div class="platform-navbar-link">{{ menu_link_content(record) }}</div>
+{%- endif -%}
+{% endmacro %}
+
+{% block sidebartitle %}
+
+  {% if faculty_navbar %}
+    <a class="heading" href="{{ faculty_navbar_root }}">
+      <div class="logo-box">
+        <img class="logo" src="{{ pathto('_static/' + logo, 1) }}"/>
+      </div>
+    </a>
+    {% if not theme_logo_only %}
+      <a href="{{ pathto(master_doc) }}" class="icon icon-home"> {{ project }}</a>
+    {% endif %}
+  {% else %}
+    <a class="heading heading-extra-margin" href="{{ pathto(master_doc) }}">
+      <div class="logo-box logo-box-large">
+        <img class="logo" src="{{ pathto('_static/' + logo, 1) }}"/>
+      </div>
+      {% if not theme_logo_only %}
+        <span class="icon icon-home"> {{ project }}</span>
+      {% endif %}
+    </a>
+  {% endif %}
+
+  {% if theme_display_version %}
+    {%- set nav_version = version %}
+    {% if READTHEDOCS and current_version %}
+      {%- set nav_version = current_version %}
+    {% endif %}
+    {% if nav_version %}
+      <div class="version">{{ nav_version }}</div>
+    {% endif %}
+  {% endif %}
+
+  {% include "searchbox.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% if faculty_navbar %}
+    <nav class="platform-navbar">
+      <ul>
+        {% for section in faculty_navbar_content %}
+          <li class="platform-navbar-section">
+            {{ menu_link(section) }}
+            {% if section.entries is defined %}
+              <ul>
+                {% for entry in section.entries %}
+                  <li class="platform-navbar-entry">{{ menu_link(entry) }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+
+  {{ super() }}
+
+{% endblock %}

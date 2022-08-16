@@ -1,0 +1,9 @@
+{% extends "sphinx_rtd_theme/breadcrumbs.html" %}
+
+{% block breadcrumbs %}
+  <li class="breadcrumb"><a href="{{ pathto(master_doc) }}">{{ project }}</a> &raquo;</li>
+    {% for doc in parents %}
+      <li class="breadcrumb"><a href="{{ doc.link|e }}">{{ doc.title }}</a> &raquo;</li>
+    {% endfor %}
+  <li class="breadcrumb">{{ title }}</li>
+{% endblock %}

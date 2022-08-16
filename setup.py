@@ -19,7 +19,8 @@ setup(
         'mistune',
         'bs4',
         'jinja2',
-        'bottle'
+        'bottle',
+        'toml'
     ),
     package_data={
         'adr_viewer': ['templates/index.html'],

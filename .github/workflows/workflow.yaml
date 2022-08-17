@@ -116,7 +116,7 @@ jobs:
       run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"; echo "Branch Name = ${GITHUB_REF#refs/heads/}"
       id: branch_name
     - name: Build documentation only if on release branch
-      working-directory: ./docs
+      working-directory: ./documentation
       run: |
         BRANCH_NAME="${{ steps.branch_name.outputs.branch }}"
         if [[ "${BRANCH_NAME:0:8}" = "release/" ]]; then

@@ -2,7 +2,6 @@
 
 [![Build Pipeline](https://github.com/mrwilson/adr-viewer/actions/workflows/build-pipeline.yaml/badge.svg)](https://github.com/mrwilson/adr-viewer/actions/workflows/build-pipeline.yaml)
 
-[![Build Pipeline](https://github.com/alshapton/Pyntel4004/actions/workflows/build-pipeline.yml/badge.svg)](https://github.com/alshapton/Pyntel4004/actions/workflows/build-pipeline.yml)
 
 Show off your Architecture Decision Records with an easy-to-navigate web page, either as a local web-server or generated static content.
 

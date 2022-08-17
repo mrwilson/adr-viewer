@@ -23,10 +23,10 @@ setup(
         'toml'
     ),
     package_data={
-        'adr_viewer': ['templates/index.html'],
+        'adrviewer': ['templates/index.html'],
     },
     entry_points={
-        'console_scripts': ['adr-viewer=adrviewer:main']
+        'console_scripts': ['adr-viewer=adr_viewer.adrviewer:main']
     },
     classifiers=[
         'License :: OSI Approved :: MIT License',

@@ -23,7 +23,7 @@ setup(
         'toml'
     ),
     package_data={
-        'adrviewer': ['templates/index.html'],
+        'adrviewer': ['adr_viewer/templates/index.html'],
     },
     entry_points={
         'console_scripts': ['adr-viewer=adr_viewer.adrviewer:main']

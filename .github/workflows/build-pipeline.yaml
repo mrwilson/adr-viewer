@@ -78,11 +78,11 @@ jobs:
       run: |
         # Install accessibility suite
         npm install -g pa11y
-        adr-viewer
+        python3 adr-viewer.py
         pa11y ./index.html --config pa11y.json
             
   pypi-publish:
-    needs: [build, SonarCloud]
+    needs: [build, sonarcloud]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -111,7 +111,7 @@ jobs:
         python -m twine upload dist/* ;
         fi
   documentation-publish:
-    needs: [build, SonarCloud]
+    needs: [build, sonarcloud]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2

@@ -177,5 +177,5 @@ def main(adr_path, output, serve, port, template_dir, heading, config):
             out.write(content)
 
 
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+#    main()

@@ -78,7 +78,7 @@ jobs:
       run: |
         # Install accessibility suite
         npm install -g pa11y
-        adr-viewer
+        ./adr-viewer
         pa11y ./index.html --config pa11y.json
             
   pypi-publish:

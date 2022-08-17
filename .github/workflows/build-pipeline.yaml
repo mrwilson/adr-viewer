@@ -74,11 +74,11 @@ jobs:
         # Run all tests
         pytest test_adr_viewer.py
     - name: Test accessibility
-      working-directory: .
+      working-directory: ./adr_viewer
       run: |
         # Install accessibility suite
         npm install -g pa11y
-        ./adr-viewer
+        adr-viewer
         pa11y ./index.html --config pa11y.json
             
   pypi-publish:

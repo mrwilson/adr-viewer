@@ -5,8 +5,6 @@ ADR Viewer
 
 .. include:: ../global.rst
 
-[![Build Status](https://travis-ci.org/mrwilson/adr-viewer.svg?branch=master)](https://travis-ci.org/mrwilson/adr-viewer)
-
 Show off your Architecture Decision Records with an easy-to-navigate web page, either as a local web-server or generated static content.
 
 Examples
@@ -62,12 +60,12 @@ These settings are specifically targetted at the colours of the page to aid with
 
 The colours (the example used here is `green`) can be specified in a number of formats:
 
-  - Hex values: #00FF00
+  - Hex values:        #00FF00
   - HTML Colour codes: Green
-  - RGB values: rgb(0,255,0)
-  - RGB with alpha: rgba(0,255,0,0)
-  - HSL values: hsl(0,100%,50%)
-  - HSL with alpha: hsla(0,100%,50%,0)
+  - RGB values:        rgb(0,255,0)
+  - RGB with alpha:    rgba(0,255,0,0)
+  - HSL values:        hsl(0,100%,50%)
+  - HSL with alpha:    hsla(0,100%,50%,0)
 
 More information about codes and names for HTML colours can be found `at this useful site <http://htmlcolorcodes.com>`_.
 

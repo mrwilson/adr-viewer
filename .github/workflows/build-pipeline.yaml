@@ -79,7 +79,7 @@ jobs:
         # Install accessibility suite
         npm install -g pa11y
         python setup.py install
-        adr-viewer
+        adr-viewer --template-dir adr_viewer/templates
         pa11y ./index.html --config pa11y.json
             
   pypi-publish:

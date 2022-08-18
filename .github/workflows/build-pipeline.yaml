@@ -44,10 +44,13 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     strategy:
+    max-parallel: 4
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10", pypy-2.7, pypy-3.8]
-
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.7", "3.8", "3.9", "3.10", pypy-3.8]
+        include:
+          - os: windows-latest
+            windowsOS:Y
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9
@@ -67,6 +70,9 @@ jobs:
         # Update pip and install flake8, pytest and coverage
         python -m pip install --upgrade pip
         pip install flake8 pytest coverage
+        if ${{ matrix.windowsOS }}:
+        pip install -r requirements.txt
+        if !${{ matrix.windowsOS }}:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |

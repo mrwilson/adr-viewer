@@ -50,7 +50,7 @@ jobs:
         python-version: ["3.7", "3.8", "3.9", "3.10", pypy-3.8]
         include:
           - os: windows-latest
-            windowsOS:Y
+            windowsOS:"Y"
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9

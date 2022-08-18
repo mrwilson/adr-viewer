@@ -74,11 +74,12 @@ jobs:
         # Run all tests
         pytest test_adr_viewer.py
     - name: Test accessibility
-      working-directory: ./adr_viewer
+      working-directory: .
       run: |
         # Install accessibility suite
         npm install -g pa11y
-        python3 adr-viewer.py
+        python setup.py install
+        adr-viewer --template-dir adr_viewer/templates
         pa11y ./index.html --config pa11y.json
   pypi-publish:
     needs: [build, sonarcloud]

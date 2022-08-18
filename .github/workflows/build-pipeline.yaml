@@ -73,12 +73,16 @@ jobs:
         # Update pip and install flake8, pytest and coverage
         python -m pip install --upgrade pip
         pip install flake8 pytest coverage
-        if: ${{ matrix.win }}
-        if exists requirements.txt pip install -r requirements.txt
-        if: ${{ matrix.linux }}
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if: ${{ matrix.macos }}
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install adr-viewer on Windows ?
+      if: matrix.win
+      run: if exists requirements.txt pip install -r requirements.txt
+    - name: Install adr-viewer on Linux ?
+      if: matrix.linux
+      run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install adr-viewer on MacOS ?
+      if: matrix.macos
+      run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: installed adr-viewer on ${{matrix.os}}      
     - name: Lint with flake8
       run: |
         # Stop the build if there are Python syntax errors or undefined names

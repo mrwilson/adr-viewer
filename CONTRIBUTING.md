@@ -26,4 +26,26 @@ Note that for this model to function correctly, branches must be named according
 |feature| Feature branches are where new functionality is developed, bug fixes and general updates are carried out prior to being tested and merged into the develop branch|:large_blue_diamond: |
 
 
-**Pushing and Building
+**Making a feature change** :large_blue_diamond: :large_orange_diamond:
+
+To allow the change process to proceed smoothly, when making a change, please do the following:
+
+- ensure that you have forked the main repository
+
+All instructions from here onward relate to YOUR copy of the forked repository
+
+- create a new feature branch (e.g. feature/29 - where 29 is the issue number)
+- checkout that branch locally
+- make the change and add any new tests, and make sure the existing tests still pass.
+- add the changed/new/deleted files to the tracked files list (git add xxxxxx)
+- commit the changes with an appropriate message (stating which issue is fixed)
+- push the changes into the repository
+- when you are ready, create a PR into the develop branch
+- collaborate on the review of the PR until the maintainer merges it into the develop branch
+- this PR will then be deployed into the next release
+
+**Secrets and Tokens** :large_orange_diamond:
+
+In order for the build to successfully complete, the following tokens and secrets need to be defined:
+
+SONAR_TOKEN

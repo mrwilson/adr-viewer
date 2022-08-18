@@ -4,4 +4,3 @@ click
 jinja2
 mistune
 toml
-pytest

@@ -73,11 +73,11 @@ jobs:
         # Update pip and install flake8, pytest and coverage
         python -m pip install --upgrade pip
         pip install flake8 pytest coverage
-        if ${{ matrix.win }}
+        if: ${{ matrix.win }}
         if exists requirements.txt pip install -r requirements.txt
-        if ${{ matrix.linux }}
+        if: ${{ matrix.linux }}
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if ${{ matrix.macos }}
+        if: ${{ matrix.macos }}
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |

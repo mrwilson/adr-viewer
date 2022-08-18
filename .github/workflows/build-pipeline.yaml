@@ -45,15 +45,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         python-version: ["3.7", "3.8", "3.9", "3.10", pypy-3.8]
-        include:
-          - os: windows-latest
-            win: "Y"
-          - os: macos-latest
-            mac: "Y"
-          - os: linux-latest
-            linux: "Y"
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9
@@ -72,16 +65,8 @@ jobs:
       run: |
         # Update pip and install flake8, pytest and coverage
         python -m pip install --upgrade pip
-        pip install flake8 pytest coverage
-    - name: Install adr-viewer on Windows ?
-      if: matrix.win
-      run: if exists requirements.txt pip install -r requirements.txt
-    - name: Install adr-viewer on Linux ?
-      if: matrix.linux
-      run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Install adr-viewer on MacOS ?
-      if: matrix.macos
-      run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi  
+        pip install flake8 pytest coverag
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi  
     - name: Lint with flake8
       run: |
         # Stop the build if there are Python syntax errors or undefined names

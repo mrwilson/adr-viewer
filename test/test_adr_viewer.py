@@ -10,6 +10,11 @@ from adrviewer import parse_adr_to_config, render_html  # noqa
 
 
 @pytest.fixture
+def adr0001():
+    return '../doc/adr/0001-record-architecture-decisions.md'
+
+
+@pytest.fixture
 def html_defaults():
     defaults = literal_eval("{'page': {'background-color': 'blue'}," +
                             "'accepted': {'icon': 'fa-check', " +
@@ -26,32 +31,34 @@ def html_defaults():
     return defaults
 
 
-def test_should_extract_title_from_record():
-    config = parse_adr_to_config('../doc/adr/0001-record-architecture-decisions.md')
+def test_should_extract_title_from_record(adr0001):
+    config = parse_adr_to_config(adr0001)
 
     assert config['title'] == '1. Record architecture decisions'
 
 
-def test_should_extract_status_from_record():
-    config = parse_adr_to_config('../doc/adr/0001-record-architecture-decisions.md')
+def test_should_extract_status_from_record(adr0001):
+    config = parse_adr_to_config(adr0001)
 
     assert config['status'] == 'accepted'
 
 
-def test_should_include_adr_as_html():
-    config = parse_adr_to_config('../doc/adr/0001-record-architecture-decisions.md')
+def test_should_include_adr_as_html(adr0001):
+    config = parse_adr_to_config(adr0001)
 
     assert '<h1>1. Record architecture decisions</h1>' in config['body']
 
 
 def test_should_mark_superseded_records():
-    config = parse_adr_to_config('../doc/adr/0003-use-same-colour-for-all-headers.md')
+    config = parse_adr_to_config(
+        '../doc/adr/0003-use-same-colour-for-all-headers.md')
 
     assert config['status'] == 'superseded'
 
 
 def test_should_mark_amended_records():
-    config = parse_adr_to_config('../doc/adr/0004-distinguish-superseded-records-with-colour.md')
+    adr0004 = '../doc/adr/0004-distinguish-superseded-records-with-colour.md'
+    config = parse_adr_to_config(adr0004)
 
     assert config['status'] == 'amended'
 
@@ -110,8 +117,8 @@ def test_should_render_html_with_collapsible_index(html_defaults):
     }
     content.update(html_defaults)
     html = render_html(content)
-    
-    assert '<a data-toggle="collapse" href="#collapse123">Record 123</a>' in html
+    result = '<a data-toggle="collapse" href="#collapse123">Record 123</a>'
+    assert result in html
 
 
 def test_should_ignore_invalid_files():

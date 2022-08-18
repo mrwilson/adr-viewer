@@ -23,7 +23,8 @@ def extract_statuses_from_adr(page_object):
             if current_node.name == 'p':
                 yield current_node.text
             elif current_node.name == 'ul':
-                yield from (li.text for li in current_node.children if li.name == "li")
+                yield from (li.text
+                            for li in current_node.children if li.name == "li")
             else:
                 continue
 
@@ -62,7 +63,7 @@ def parse_adr_to_config(path):
 def render_html(config, template_dir_override=None):
 
     env = Environment(
-        loader = PackageLoader('adr_viewer', 'templates') if template_dir_override is None else FileSystemLoader(template_dir_override),
+        loader=PackageLoader('adr_viewer', 'templates') if template_dir_override is None else FileSystemLoader(template_dir_override),  # noqa
         autoescape=select_autoescape(['html', 'xml'])
     )
 
@@ -175,7 +176,3 @@ def main(adr_path, output, serve, port, template_dir, heading, config):
     else:
         with open(output, 'w') as out:
             out.write(content)
-
-
-#if __name__ == '__main__':
-#    main()

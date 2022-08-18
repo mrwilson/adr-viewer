@@ -65,7 +65,7 @@ jobs:
       run: |
         # Update pip and install flake8, pytest and coverage
         python -m pip install --upgrade pip
-        pip install flake8 pytest coverag
+        pip install flake8 pytest coverage
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi  
     - name: Lint with flake8
       run: |

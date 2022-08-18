@@ -81,8 +81,7 @@ jobs:
       run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Install adr-viewer on MacOS ?
       if: matrix.macos
-      run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: installed adr-viewer on ${{matrix.os}}      
+      run: if [ -f requirements.txt ]; then pip install -r requirements.txt; fi  
     - name: Lint with flake8
       run: |
         # Stop the build if there are Python syntax errors or undefined names

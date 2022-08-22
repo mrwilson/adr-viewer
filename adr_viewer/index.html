@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>ADR Viewer - </title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+
+<style>
+/* -------------------------------------
+ * For horizontal version, set the
+ * $vertical variable to false
+ * ------------------------------------- */
+/* -------------------------------------
+ * General Style
+ * ------------------------------------- */
+ @import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+ body {
+   max-width: 1200px;
+   margin: 0 auto;
+   padding: 0 5%;
+   font-size: 100%;
+   font-family: "Noto Sans", sans-serif;
+   color: #eee9dc;
+   background: #48b379;
+ }
+ 
+ h2 {
+   margin: 3em 0 0 0;
+   font-size: 1.5em;
+   letter-spacing: 2px;
+   text-transform: uppercase;
+ }
+ 
+ /* -------------------------------------
+  * timeline
+  * ------------------------------------- */
+ #timeline {
+   list-style: none;
+   margin: 50px 0 30px 120px;
+   padding-left: 30px;
+   border-left: 8px solid #eee9dc;
+ }
+ #timeline li {
+   margin: 40px 0;
+   position: relative;
+ }
+ #timeline p {
+   margin: 0 0 15px;
+}
+ 
+
+.date {
+   margin-top: -10px;
+   top: 50%;
+   left: -158px;
+   font-size: 0.95em;
+   line-height: 20px;
+   position: absolute;
+ }
+ 
+ .circle {
+   margin-top: -10px;
+   top: 50%;
+   left: -44px;
+   width: 10px;
+   height: 10px;
+   background: #48b379;
+   border: 5px solid #eee9dc;
+   border-radius: 50%;
+   display: block;
+   position: absolute;
+ }
+ 
+ .content {
+   max-height: 20px;
+   padding: 10px 20px 0;
+   border-color: transparent;
+   border-width: 2px;
+   border-style: solid;
+   border-radius: 0.5em;
+   position: relative;
+   overflow: auto;
+   top:0
+ }
+ .content:before, .content:after {
+   content: "";
+   width: 0;
+   height: 0;
+   border: solid transparent;
+   position: absolute;
+   pointer-events: none;
+   right: 100%;
+ }
+ .content:before {
+   border-right-color: inherit;
+   border-width: 20px;
+   top: 50%;
+   margin-top: 10px;
+ }
+ .content:after {
+   border-right-color: #48b379;
+   border-width: 17px;
+   top: 50%;
+   margin-top: -17px;
+ }
+ .content p {
+   max-height: 0;
+   color: transparent;
+   text-align: justify;
+   word-break: break-word;
+   hyphens: none;
+   overflow: hidden;
+   padding: 10px 0px 0px 0;
+ }
+ 
+ label {
+   font-size: 1.3em;
+   position: absolute;
+   z-index: 100;
+   cursor: pointer;
+   top: 0px;
+   transition: transform 0.2s linear;
+   position: -webkit-sticky;
+   position: sticky;
+   top: 0px;
+ 
+}
+ 
+ .radio {
+   display: none;
+ }
+ 
+ .radio:checked + .relative label {
+   cursor: auto;
+   transform: translateX(42px);
+ }
+ .radio:checked + .relative .circle {
+   background: #f98262;
+ }
+ .radio:checked ~ .content {
+   max-height: 180px;
+   border-color: #eee9dc;
+   margin-right: 20px;
+   transform: translateX(20px);
+   transition: max-height 0.4s linear, border-color 0.5s linear, transform 0.2s linear;
+ }
+ .radio:checked ~ .content p {
+   max-height: 200px;
+   color: #eee9dc;
+   transition: color 0.3s linear 0.3s;
+ }
+ 
+ /* -------------------------------------
+  * mobile phones (vertical version only)
+  * ------------------------------------- */
+ @media screen and (max-width: 767px) {
+   #timeline {
+     margin-left: 0;
+     padding-left: 0;
+     border-left: none;
+   }
+   #timeline li {
+     margin: 50px 0;
+   }
+ 
+   label {
+     width: 85%;
+     font-size: 1.1em;
+     white-space: nowrap;
+     text-overflow: ellipsis;
+     overflow: hidden;
+     display: block;
+     transform: translateX(18px);
+   }
+ 
+   .content {
+     padding-top: 45px;
+     border-color: #eee9dc;
+   }
+   .content:before, .content:after {
+     border: solid transparent;
+     bottom: 100%;
+   }
+   .content:before {
+     border-bottom-color: inherit;
+     border-width: 17px;
+     top: -16px;
+     left: 50px;
+     margin-left: -17px;
+   }
+   .content:after {
+     border-bottom-color: #48b379;
+     border-width: 20px;
+     top: -20px;
+     left: 50px;
+     margin-left: -20px;
+   }
+   .content p {
+     font-size: 0.9em;
+     line-height: 1.4;
+   }
+ 
+   .circle, .date {
+     display: none;
+   }
+ }  
+</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<h2>ADR Viewer - </h2>
+<ul id='timeline'>
+  
+  <li class='work'>
+    
+      
+    
+    
+    <input class='radio' id='work0' name='works' type='radio' checked>
+    <div class="relative">
+      <label for='work0'>1. Record architecture decisions
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2021-09-01</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>1. Record architecture decisions</h1>
+<p>Date: 2021-09-01</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<p>Drives <a href="0002-use-structuralizr-to-document-architecture.md">2. Use Structurizr to document Architecture</a></p>
+<h2>Context</h2>
+<p>We need to record the architectural decisions made within Hodge</p>
+<h2>Decision</h2>
+<p>We will use Architecture Decision Records, as <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">described by Michael Nygard</a>.</p>
+<h2>Consequences</h2>
+<p>See Michael Nygard's article, linked above. For a lightweight ADR toolset, see Nat Pryce's <a href="https://github.com/npryce/adr-tools">adr-tools</a>.</p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work1' name='works' type='radio' >
+    <div class="relative">
+      <label for='work1'>2. Use Structurizr to document Architecture
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2022-08-01</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>2. Use Structurizr to document Architecture</h1>
+<p>Date: 2022-08-01</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<p>Driven by <a href="0001-record-architecture-decisions.md">1. Record architecture decisions</a></p>
+<h2>Context</h2>
+<p>A tool should be used to document the architecture. A diagramming tool which is typically used to initially document architectures. 
+Once the architecture is documented in a diagramming tool (for design purposes) it should be moved to a modelling tool which will allow rendering, analysis, and formatting into a multitude of different forms all from the same sourece of truth.</p>
+<h2>Decision</h2>
+<p>The decision to use Structurizr was made after looking at various other architectural modelling tools.</p>
+<p>Broadly speaking, Structurizr is:</p>
+<ul>
+<li>Good Value for Money</li>
+<li>Easy to use</li>
+<li>Aligns with Hodge's &quot;-as-code&quot; philosophy</li>
+<li>Allows the models to be stored in a normal GIT repository and version controlled</li>
+<li>Will (in time) allow other tools' output to be added to the model automatically</li>
+</ul>
+<h2>Consequences</h2>
+<p>Positive outcomes include:</p>
+<ul>
+<li>Visibility of architecture</li>
+<li>Ability to render in different formats</li>
+<li>Ability to show stages of emerging architectures</li>
+<li>Ability to record additional documentation</li>
+<li>Ability to record Architectural Decisions</li>
+</ul>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work2' name='works' type='radio' >
+    <div class="relative">
+      <label for='work2'>3. Mambu IDs
+        
+        <i class="adr-icon fas fa-fw fa-question"></i>
+        
+      </label>
+      <span class='date'>2021-11-17</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>3. Mambu IDs</h1>
+<p>Date: 2021-11-17</p>
+<h2>Status</h2>
+<p>Superceded by <a href="0004-mambu-ids.md">4. Mambu-IDs</a></p>
+<h2>Context</h2>
+<p>Mambu does not allow custom fields within products. Therefore, products cannot be filtered on attributes of the product such as length, type etc.</p>
+<p>Persistent Technologies suggested that a structured product ID be introduced, containing component parts relating to attributes of the product to effect sorting and filtering. For example an ID could be:</p>
+<blockquote>
+<p>B_3Y_M_L_20211001</p>
+</blockquote>
+<p>Where each part of the name separated by an underscore indicates an encoded pieces of information related to the product. In this example, a 3 year bond, paying monthly interest, for loyal customers only, starting on 01-Oct-2021. An issue with this approach will be future proofing, how do we manage new product flags / settings going forward? Old IDs could become incompatible.</p>
+<p>In addition to product information, there will be digital assets (stored in S3) which will need to be retrieved and rendered within the application. It is proposed that a JSON file be used to link the product information in Mambu with the related digital content in S3 - this would be located within Hodge’s S3 bucket itself.</p>
+<p>Whilst this would no doubt solve the issue, the below illustration shows how the Mambu ID issue can be solved in an innovative manner and still retain control of the digital assets in S3 and Mambu product information from a single location.</p>
+<p><img src="./images/0003-image1.png" alt="Mambu ID diagram" /></p>
+<h2>Decision</h2>
+<p>A product meta data table will be created which will have a primary key of the Mambu product, and provide the extra fields which Mambu is unable to store, for example start date &amp; end date. A web hook will be setup to populate the other product data into this structure as well (term length, interest type etc). Note that the Mambu ID format will be as described above (see caveat below)</p>
+<p>Since the data flow to populate the meta data table is one-way i.e. from Mambu to the meta-data table held within the integration layer, it is a simple task to set up a web hook from Mambu to populate the metadata table upon a change/insert of a product in Mambu.</p>
+<p>For information that cannot be mastered in Mambu, functionality will need to be developed to maintain that information in the meta data table.</p>
+<h2>Consequences</h2>
+<p>Mambu ID’s are allowed to have a pattern to facilitate speedy human elicitation of product details from records, logs etc. However, this decision is made on the understanding that the Mambu ID will <strong>never</strong> be used for any other purpose other than linking data sources. That it, any business information that the ID purports to carry will also be carried as a data attribute in its’ own right and filtering, searching, sorting etc will be carried out on that data item instead.</p>
+<h2>References</h2>
+<p><a href="https://hodgebank.atlassian.net/wiki/spaces/SEA/pages/3952541886/APP-000001+-+Mambu+IDs">Original Decision Work</a></p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work3' name='works' type='radio' >
+    <div class="relative">
+      <label for='work3'>4. Mambu-IDs
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2022-08-02</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>4. Mambu-IDs</h1>
+<p>Date: 2022-08-02</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<p>Supercedes <a href="0003-mambu-ids.md">3. Mambu IDs</a></p>
+<h2>Context</h2>
+<p>Persistent Technologies suggested that a structured product ID be introduced, containing component parts relating to attributes of the product to effect sorting and filtering. For example an ID could be:</p>
+<blockquote>
+<p>B_3Y_M_L_20211001</p>
+</blockquote>
+<h2>Decision</h2>
+<p>The product IDs as described above will be adopted in Mambu (Structure to be provided)</p>
+<h2>Consequences</h2>
+<p>Mambu ID’s are allowed to have a pattern to facilitate speedy human elicitation of product details from records, logs etc. However, this decision is made on the understanding that the Mambu ID will <strong>never</strong> be used for any other purpose other than linking data sources. That it, any business information that the ID purports to carry will also be carried as a data attribute in its’ own right and filtering, searching, sorting etc will be carried out on that data item instead.</p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work4' name='works' type='radio' >
+    <div class="relative">
+      <label for='work4'>5. Java Version
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2021-09-28</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>5. Java Version</h1>
+<p>Date: 2021-09-28</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>The strategic platform for Hodge’s development is a Java Virtual Machine (JVM). Java has been upgraded over the years, adding new features, fixing bugs and performance improvements etc.  in the whole Java ecosystem, tooling and the JVM in itself.
+The current set of “systems” within Hodge use a mixture of Java8 and Java11. 
+The latest LTS version of Java is Java17, released in September 2021 will be supported until at least 2029. The next LTS version of Java (Java21) is due for release in September 2023.
+The full lifecycle and support history of the Java platform can be found below.</p>
+<h2>Decision</h2>
+<p>As the version history shows (below) both Java8 and Java11 are still in support, however, these older platforms lack the level of functionality and performance of Java17. Coupled with the reasons above, it is recommended that a move to Java17 be carried out, and all new development work should be carried out on Java17</p>
+<h2>Consequences</h2>
+<p>Newer versions of tooling will target newer versions of Java - should tooling and ecosystem products Hodge uses cease to support older versions of Java, then alternatives need to be found.Those alternatives may not exist.
+Support for the underlying JVM and JDKs are required in the event of any bugs etc. Using older versions of Java may result in support or fixes not being available.</p>
+<p>Older versions may not have appropriate security patches applied, and therefore present an additional attack surface i.e. a vulnerability.</p>
+<h2>References</h2>
+<p><img src="./images/0005-image1.png" alt="Java Support" /></p>
+<p><a href="https://hodgebank.atlassian.net/wiki/spaces/DI/pages/3933634569/Java+Version">Original Decision Work</a></p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work5' name='works' type='radio' >
+    <div class="relative">
+      <label for='work5'>6. Templating Engine
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2021-09-29</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>6. Templating Engine</h1>
+<p>Date: 2021-09-29</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>We need to decide on which templating engine we will use going forward in the DSP project and in the wider Hodge systems. This is specifically in relation to customer communications such as emails and letters.</p>
+<h2>Background</h2>
+<p>During the course of a customer journey with Hodge, a number of communications in the form of letters / emails will be sent to them. These communications need to be populated with variable information (such as title, first name, surname) and then converted into a type which is suitable to send or print (i.e. HTML).</p>
+<p>A couple of options were considered <a href="https://www.thymeleaf.org">Thymeleaf</a> and <a href="https://freemarker.apache.org/">What is Apache FreeMarker™</a>?</p>
+<p>Both of these operate in a very similar way, an example of both has been given below. As we already have around 30 templates written in FTL (freemarker template) and also numerous on the Holmes project, its probably sensible we just stick with this approach going forward.</p>
+<p>Another point to consider would be if we chose Thymeleaf then we are consolidating our templating libraries into one, for example we will use Thymeleaf for the view part of our MVC web app, and also for communications. However, as Thymeleaf is being phased out in favour of ReactJS, there isn’t much need to consider this point.</p>
+<h5>Thymeleaf:</h5>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p th:text=&quot;#{greetings(${recipientName})}&quot;&gt;&lt;/p&gt;
+        &lt;p th:text=&quot;${text}&quot;&gt;&lt;/p&gt;
+        &lt;p th:text=&quot;#{regards}&quot;&gt;&lt;/p&gt;
+        &lt;p&gt;
+        &lt;em th:text=&quot;#{signature(${senderName})}&quot;&gt;&lt;/em&gt; &lt;br /&gt;
+        &lt;/p&gt;    
+    &lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+<h5>Freemarker:</h5>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;Hi ${recipientName}&lt;/p&gt;
+        &lt;p&gt;${text}&lt;/p&gt;
+        &lt;p&gt;Regards,&lt;/p&gt;
+        &lt;p&gt;
+        &lt;em&gt;${senderName} at Hodge&lt;/em&gt; &lt;br /&gt;
+        &lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+<h2>Decision</h2>
+<p>The library to use going forward should remain as Freemarker, this aligns with the current templates created on DOL and Holmes &amp; Persistent are happy to use it.</p>
+<h2>Consequences</h2>
+<p>Using a standard, modern templating engine means that:</p>
+<ul>
+<li>the same engine across Hodge will be used</li>
+<li>wider use of a common skill</li>
+<li>more flexible use of resources</li>
+</ul>
+<p><a href="https://hodgebank.atlassian.net/wiki/spaces/SEA/pages/3952607823/APP-000004+-+Templating+engine">Original Decision Work</a></p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work6' name='works' type='radio' >
+    <div class="relative">
+      <label for='work6'>7. Package Naming
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2021-11-29</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>7. Package Naming</h1>
+<p>Date: 2021-11-29</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>We need to decide on naming standards for the code within Hodge services</p>
+<h2>Background</h2>
+<p>The current naming standards seen on all DOL / Holmes microservices are as follows:</p>
+<pre><code>hodge.co.uk.*
+
+</code></pre>
+<p>This is actually the reverse of what is considered normal practice, which should be company domain name reversed, for example:</p>
+<pre><code>org.springframework.*
+
+</code></pre>
+<h2>Decision</h2>
+<p>For any new services going forward we will align to standard practice, starting with the new microservices being created for the DSP project, for example:</p>
+<pre><code>uk.co.hodge.account.*
+uk.co.hodge.notification.*
+uk.co.hodge.product.*
+
+</code></pre>
+<h2>Consequences</h2>
+<p>What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.</p>
+<p><a href="https://hodgebank.atlassian.net/wiki/spaces/SEA/pages/3955032225/APP-000005+-+Package+naming+standards">Original Decision Work</a></p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work7' name='works' type='radio' >
+    <div class="relative">
+      <label for='work7'>8. Static Code Analysis
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2021-12-02</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>8. Static Code Analysis</h1>
+<p>Date: 2021-12-02</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>Static Code analysis is a technique for analysing source code with a view to catching bugs, vulnerabilities and potential damaging issues caused by not using best practice.</p>
+<p>Currently, Hodge use SonarQube for this purpose. 
+Other tools are available, and a sweep of the marketplace has narrowed this down to two contenders:</p>
+<ul>
+<li>SonarCloud</li>
+<li>Github Actions</li>
+</ul>
+<h2>Decision</h2>
+<p>After analysing the two tools that remained in the contender list, *<strong>SonarCloud</strong>* has been selected to move forward because of the following reasons:
+SonarCloud provides several mechanisms for invocation e.g. from the IDE, pre-commit and during the pipeline, whereas Github Actions' dependency checker is only on commit or further down in the pipeline.</p>
+<p>SonarQube is already known to Hodge, and can be simply integrated into the SDLC, as will the cloud-service, SonarCloud.</p>
+<h2>Consequences</h2>
+<p>Developers will be able to see the results of the SonarCloud analysis early on in the SDLC - enabling deficiencies to be fixed earlier.</p>
+<h2>References</h2>
+<p><a href="https://hodgebank.atlassian.net/wiki/spaces/SEA/pages/3954934392/APP-000006+-+Static+Code+Analysis">Original Decision Work</a></p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work8' name='works' type='radio' >
+    <div class="relative">
+      <label for='work8'>9. React/JSX Coding Standards
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2021-11-30</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>9. React/JSX Coding Standards</h1>
+<p>Date: 2021-11-30</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>In order to promote good consistent and good React coding practices across Hodge, we need to have a defined style and standards guide</p>
+<h2>Decision</h2>
+<p>JavaScript is weakly typed and can be formatted in a number of ways, for example semi colons are not mandatory on the end of lines and code and there is no whitespace formatting to speak of. Its therefore very important that we adhere to standards, not just to make sure code is clean and issue free, but also to aid future re-use and maintenance.</p>
+<p>An important superset of JavaScript is TypeScript, developed by Microsoft, which has enabled static typing to be introduced. It is important that TypeScript is written in Hodge and not regular JavaScript which is inherently unsafe in comparison. It is also important that a style guide is followed, such as the <a href="https://github.com/airbnb/javascript/tree/master/react">Airbnb React/JSX guide</a>. This will ensure certain standards are followed, in relation to naming, class structure, whitespace alignment, class structure and method ordering.</p>
+<p>Hodge already have a confluence page which defines React linting, testing and style standards to be followed: <a href="https://hodgebank.atlassian.net/wiki/spaces/SEA/pages/3777003885">Testing, coding standards and linting</a></p>
+<h2>Consequences</h2>
+<p>As Hodge has previously used the Airbnb React/JSX stye guide, we believe this is the best solution going forward.</p>
+<h2>References</h2>
+<p><a href="https://hodgebank.atlassian.net/wiki/spaces/SEA/pages/3955359838/APP-000007+-+React+JSX+coding+standards">Original Decision Work</a></p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work9' name='works' type='radio' >
+    <div class="relative">
+      <label for='work9'>10. Timezones
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2021-12-02</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>10. Timezones</h1>
+<p>Date: 2021-12-02</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>To achieve standardisation and consistency across Hodge’s estate, all times stored will be a true reflection of the real world, or a documented deviance from that (e.g. UTC)</p>
+<p>Systems typically have a timezone which can be set at the compute platform level, such that any datestamp-type operation will source its' timestamp from there. Additionally, NTP servers are available (Network Time Protocol) which systems may synchronise with remote atomic clocks to ensure correctness of time.
+Cloud-based services and providers (such as AWS and Microsoft) typically have their own NTP servers which their infrastructure will synchronise with. ANY timezone can be selected, not just the local one.</p>
+<h2>Decision</h2>
+<ul>
+<li><p>All dates and times within the scope of the DSP project will be standardised on UK time. That is: Europe/London  UTC+0 (however, when BST occurs, we require the changeover to occur automatically to Europe/London - UTC+1 ), such that at ALL times, irrespective of the time of year, dates + times stored are identical to the time at that moment in the real world.</p>
+</li>
+<li><p>All other systems will have their Timezones documented here (or in a successor to this ADR)</p>
+</li>
+</ul>
+<h2>Consequences</h2>
+<p>All systems can have a view of the time that actions were recorded (logs, transactions etc) which is in the same unit and metric.</p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work10' name='works' type='radio' >
+    <div class="relative">
+      <label for='work10'>11. http Verbs
+        
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        
+      </label>
+      <span class='date'>2021-09-30</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>11. http Verbs</h1>
+<p>Date: 2021-09-30</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>There are some 39 HTTP verbs in the HTTP1.1 specification (<a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods">Hypertext Transfer Protocol</a>).
+However, only 9 of those are in general use; those in bold indicate those which are almost always used.</p>
+<ul>
+<li><strong>GET</strong></li>
+<li>HEAD</li>
+<li><strong>POST</strong></li>
+<li><strong>PUT</strong></li>
+<li><strong>DELETE</strong></li>
+<li><strong>PATCH</strong></li>
+<li>CONNECT</li>
+<li>OPTIONS</li>
+<li>TRACE</li>
+</ul>
+<h2>Definitions:</h2>
+<p>| Term | Meaning | 
+|------|---------|
+| SAFE |In the context of REST APIs, a verb is considered non-SAFE if the API call (with its associated verb) results in a change to the state of a resource.|
+| IDEMPOTENT | In the context of REST APIs, when making multiple identical requests has the same effect as making a single request – then that REST API is deemed to be idempotent.  Idempotence essentially means that the result of a successfully performed request is independent of the number of times it is executed. |</p>
+<p>The verbs are classified as follows:</p>
+<ul>
+<li>GET is both safe and idempotent</li>
+<li>PUT,DELETE are not safe but idempotent</li>
+<li>POST,PATCH are neither safe nor idempotent</li>
+</ul>
+<p>Being non-SAFE is a quality of a verb which is sometimes desirable and necessary, for example, a POST needs to be non-SAFE to be able to achieve the creation of resources.</p>
+<p><strong>GET</strong>
+GET is a simple HTTP verb which requests a resource and returns it (if it exists) or an error if not</p>
+<pre><code>GET http://www.hodge.co.uk/customer/73645812/details
+</code></pre>
+<p><strong>POST</strong>
+POST requires all the mandatory data items of a new resource, and creates that resource if it doesn't already exist.
+Note that POST is neither safe nor idempotent.</p>
+<pre><code class="language-json">POST /api/2.2/customer/new HTTP/1.1
+HOST: hodge.co.uk
+Content-Type:application/json
+Accept:application/json
+{
+  &quot;customer&quot;: {
+    &quot;name&quot;: &quot;Tom Baker&quot;,
+    &quot;occupation&quot;: &quot;Time Lord&quot;,
+    &quot;details&quot;: {
+      &quot;dob&quot;: &quot;N/A&quot;,
+      &quot;place&quot;: &quot;Kasterberus&quot;,
+      &quot;age-on-opening&quot;: 968,
+      &quot;initial-balance&quot;: &quot;§671&quot;
+    }
+  }
+}
+</code></pre>
+<p><strong>PUT</strong>
+PUT is most often used as an update to an already existing resource
+PUT is not a safe operation, in that it modifies (or creates) state on the server, but it is idempotent.</p>
+<pre><code class="language-json">PUT /api/2.2/customer/73645812 HTTP/1.1
+HOST: hodge.co.uk
+Content-Type: application/json
+{
+  &quot;customer&quot;: {
+    &quot;name&quot;: &quot;Peter Davison&quot;
+  }
+}
+</code></pre>
+<p><strong>PATCH</strong>
+PATCH is most often used as an update to an already existing resource
+PATCH is not a safe operation, in that it modifies (or creates) state on the server, nor is it idempotent.</p>
+<pre><code class="language-json">PATCH /api/2.2/customer/73645812 HTTP/1.1
+HOST: hodge.co.uk
+Content-Type: application/json
+{
+  &quot;customer&quot;: {
+    &quot;name&quot;: &quot;Colin Baker&quot;
+  }
+}
+</code></pre>
+<p><strong>DELETE</strong>
+Clearly, DELETE is used to delete a resource - at Hodge, we should be soft-deleting only.</p>
+<pre><code class="language-json">DELETE /api/2.2/customer/73645812 HTTP/1.1
+HOST: hodge.co.uk
+</code></pre>
+<p>DELETE is both safe and idempotent - since the first time a DELETE is used, it will delete the resource, subsequent calls will return a 404 Not Found error - which is an identical end result i.e. the resource no longer exists.</p>
+<h2>Decision</h2>
+<p>The recommendation is that the following verbs be used when creating Hodge APIs:
+| Verb | Rationale |
+|------|-----------|
+| GET  | Safe, idempotent verb with no side-effects
+| POST |non-Safe (but by necessity), non-idempotent (by necessity) - however, the services should do checking to ensure multiple customers (for example) are not created with the same details
+| DELETE |Both safe and idempotent - semantically correct for removing resources
+| PUT |PUT is non-Safe (by necessity) but it does have idempotence</p>
+<p>The recommendation is that the following verb NOT be used when creating Hodge APIs:</p>
+<p>| Verb | Rationale |
+|------|-----------|
+| PATCH |Non-safe and non-idempotent</p>
+<h2>Consequences</h2>
+<p>Using a single rationale, and therefore a single set of &quot;use-only&quot; verbs will allow Hodge's APIs to become simpler, and more predictable in their behaviour, and more supportable.</p>
+
+      </p>
+    </div>
+  </li>
+  
+  <li class='work'>
+    
+    
+    <input class='radio' id='work11' name='works' type='radio' >
+    <div class="relative">
+      <label for='work11'>12. Document Storage
+        
+        <i class="adr-icon fas fa-fw fa-question"></i>
+        
+      </label>
+      <span class='date'>2022-08-08</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        <h1>12. Document Storage</h1>
+<p>Date: 2022-08-08</p>
+<h2>Status</h2>
+<p>Amended</p>
+<h2>Context</h2>
+<p>A storage solution is required which will allow documents to be securely stored, in a managed environment, cloud-based, with accessibility controls, with documents visible to all of Hodge's systems</p>
+<h2>Decision</h2>
+<p>Option #3 in the Options Paper - a combination of S3 and Azure Storage.</p>
+<h2>Consequences</h2>
+<p>A single store made up of two logical stores allows the native technologies that Hodge has currently to best use and access document stores - Microsoft Technologies will use Azure Storage and AWS-based applications will use S3.</p>
+<p><a href="https://hodgebank.atlassian.net/wiki/spaces/SEA/pages/4025156130/APP-000009+-+Document+Storage+Solution">Original Options</a></p>
+
+      </p>
+    </div>
+  </li>
+  
+</ul>
+<!-- partial -->
+  
+</body>
+</html>

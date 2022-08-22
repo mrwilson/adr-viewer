@@ -8,6 +8,22 @@ import click
 from bottle import Bottle, run
 
 
+def extract_date_from_adr(page_object):
+    date_section = page_object.find('h1')
+
+    if date_section and date_section.nextSibling:
+        current_node = date_section.nextSibling
+
+        while current_node.name != 'h1' and current_node.nextSibling:
+            current_node = current_node.nextSibling
+
+            if current_node.name == 'p':
+                yield current_node.text
+            elif current_node.name == 'ul':
+                yield from (li.text for li in current_node.children if li.name == "li")
+            else:
+                continue
+
 def extract_statuses_from_adr(page_object):
     status_section = page_object.find('h2', text='Status')
 
@@ -31,6 +47,7 @@ def parse_adr_to_config(path):
     soup = BeautifulSoup(adr_as_html, features='html.parser')
 
     status = list(extract_statuses_from_adr(soup))
+    thedate = list(extract_date_from_adr(soup))[0].replace('Date: ', '')
 
     if any([line.startswith("Amended by") for line in status]):
         status = 'amended'
@@ -48,6 +65,7 @@ def parse_adr_to_config(path):
     if header:
         return {
                 'status': status,
+                'date': thedate,
                 'body': adr_as_html,
                 'title': header.text
             }
@@ -61,7 +79,6 @@ def render_html(config, template_dir_override=None):
         loader=PackageLoader('adr_viewer', 'templates') if template_dir_override is None else FileSystemLoader(template_dir_override),
         autoescape=select_autoescape(['html', 'xml'])
     )
-
     template = env.get_template('index.html')
 
     return template.render(config=config)

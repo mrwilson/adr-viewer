@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>{{ config.heading }}</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+
+<style>
+/* -------------------------------------
+ * For horizontal version, set the
+ * $vertical variable to false
+ * ------------------------------------- */
+/* -------------------------------------
+ * General Style
+ * ------------------------------------- */
+ @import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+ body {
+   max-width: 1200px;
+   margin: 0 auto;
+   padding: 0 5%;
+   font-size: 100%;
+   font-family: "Noto Sans", sans-serif;
+   color: #eee9dc;
+   background: #48b379;
+ }
+ 
+ h2 {
+   margin: 3em 0 0 0;
+   font-size: 1.5em;
+   letter-spacing: 2px;
+   text-transform: uppercase;
+ }
+ 
+ /* -------------------------------------
+  * timeline
+  * ------------------------------------- */
+ #timeline {
+   list-style: none;
+   margin: 50px 0 30px 120px;
+   padding-left: 30px;
+   border-left: 8px solid #eee9dc;
+ }
+ #timeline li {
+   margin: 40px 0;
+   position: relative;
+ }
+ #timeline p {
+   margin: 0 0 15px;
+}
+ 
+
+.date {
+   margin-top: -10px;
+   top: 50%;
+   left: -158px;
+   font-size: 0.95em;
+   line-height: 20px;
+   position: absolute;
+ }
+ 
+ .circle {
+   margin-top: -10px;
+   top: 50%;
+   left: -44px;
+   width: 10px;
+   height: 10px;
+   background: #48b379;
+   border: 5px solid #eee9dc;
+   border-radius: 50%;
+   display: block;
+   position: absolute;
+ }
+ 
+ .content {
+   max-height: 20px;
+   padding: 10px 20px 0;
+   border-color: transparent;
+   border-width: 2px;
+   border-style: solid;
+   border-radius: 0.5em;
+   position: relative;
+   overflow: auto;
+   top:0
+ }
+ .content:before, .content:after {
+   content: "";
+   width: 0;
+   height: 0;
+   border: solid transparent;
+   position: absolute;
+   pointer-events: none;
+   right: 100%;
+ }
+ .content:before {
+   border-right-color: inherit;
+   border-width: 20px;
+   top: 50%;
+   margin-top: 10px;
+ }
+ .content:after {
+   border-right-color: #48b379;
+   border-width: 17px;
+   top: 50%;
+   margin-top: -17px;
+ }
+ .content p {
+   max-height: 0;
+   color: transparent;
+   text-align: justify;
+   word-break: break-word;
+   hyphens: none;
+   overflow: hidden;
+   padding: 10px 0px 0px 0;
+ }
+ 
+ label {
+   font-size: 1.3em;
+   position: absolute;
+   z-index: 100;
+   cursor: pointer;
+   top: 0px;
+   transition: transform 0.2s linear;
+   position: -webkit-sticky;
+   position: sticky;
+   top: 0px;
+ 
+}
+ 
+ .radio {
+   display: none;
+ }
+ 
+ .radio:checked + .relative label {
+   cursor: auto;
+   transform: translateX(42px);
+ }
+ .radio:checked + .relative .circle {
+   background: #f98262;
+ }
+ .radio:checked ~ .content {
+   max-height: 180px;
+   border-color: #eee9dc;
+   margin-right: 20px;
+   transform: translateX(20px);
+   transition: max-height 0.4s linear, border-color 0.5s linear, transform 0.2s linear;
+ }
+ .radio:checked ~ .content p {
+   max-height: 200px;
+   color: #eee9dc;
+   transition: color 0.3s linear 0.3s;
+ }
+ 
+ /* -------------------------------------
+  * mobile phones (vertical version only)
+  * ------------------------------------- */
+ @media screen and (max-width: 767px) {
+   #timeline {
+     margin-left: 0;
+     padding-left: 0;
+     border-left: none;
+   }
+   #timeline li {
+     margin: 50px 0;
+   }
+ 
+   label {
+     width: 85%;
+     font-size: 1.1em;
+     white-space: nowrap;
+     text-overflow: ellipsis;
+     overflow: hidden;
+     display: block;
+     transform: translateX(18px);
+   }
+ 
+   .content {
+     padding-top: 45px;
+     border-color: #eee9dc;
+   }
+   .content:before, .content:after {
+     border: solid transparent;
+     bottom: 100%;
+   }
+   .content:before {
+     border-bottom-color: inherit;
+     border-width: 17px;
+     top: -16px;
+     left: 50px;
+     margin-left: -17px;
+   }
+   .content:after {
+     border-bottom-color: #48b379;
+     border-width: 20px;
+     top: -20px;
+     left: 50px;
+     margin-left: -20px;
+   }
+   .content p {
+     font-size: 0.9em;
+     line-height: 1.4;
+   }
+ 
+   .circle, .date {
+     display: none;
+   }
+ }  
+</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<h2>{{ config.heading }}</h2>
+<ul id='timeline'>
+  {% for adr_record in config.records %}
+  <li class='work'>
+    {% set checked = '' %}
+    {% if adr_record.index == 0 %}  
+    {% set checked = 'checked' %}
+    {% endif %}
+    <input class='radio' id='work{{ adr_record.index }}' name='works' type='radio' {{ checked }}>
+    <div class="relative">
+      <label for='work{{ adr_record.index }}'>{{ adr_record.title }}
+        {% if adr_record.status == "accepted" %}
+        <i class="adr-icon fas fa-fw fa-check"></i>
+        {% elif adr_record.status == "superseded" %}
+        <i class="adr-icon fas fa-fw fa-times"></i>
+        {% elif adr_record.status == "amended" %}
+        <i class="adr-icon fas fa-fw fa-arrow-down"></i>
+        {% elif adr_record.status == "pending" %}
+        <i class="adr-icon fas fa-fw fa-hourglass-half"></i>
+        {% else %}
+        <i class="adr-icon fas fa-fw fa-question"></i>
+        {% endif %}
+      </label>
+      <span class='date'>{{ adr_record.date }}</span>
+      <span class='circle'></span>
+    </div>
+    <div class='content'>
+      <p>
+        {{ adr_record.body|safe }}
+      </p>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+<!-- partial -->
+  
+</body>
+</html>

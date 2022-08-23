@@ -73,8 +73,8 @@
  }
  
  .content {
-   max-height: 20px;
-   padding: 10px 20px 0;
+   max-height: 0px;
+   padding: 10px 0px 0;
    border-color: transparent;
    border-width: 2px;
    border-style: solid;
@@ -102,7 +102,7 @@
    border-right-color: #48b379;
    border-width: 17px;
    top: 50%;
-   margin-top: -17px;
+   margin-top: 0px;
  }
  .content p {
    max-height: 0;
@@ -111,7 +111,7 @@
    word-break: break-word;
    hyphens: none;
    overflow: hidden;
-   padding: 10px 0px 0px 0;
+   padding: 0px 0px 0px 0;
  }
  
  label {
@@ -119,7 +119,7 @@
    position: absolute;
    z-index: 100;
    cursor: pointer;
-   top: 0px;
+   top: -10px;
    transition: transform 0.2s linear;
    position: -webkit-sticky;
    position: sticky;
@@ -236,9 +236,16 @@
       <span class='circle'></span>
     </div>
     <div class='content'>
-      <p>
-        {{ adr_record.body|safe }}
-      </p>
+        <h2>Context</h2>
+        {% for context_line in adr_record.context %}
+          {{ context_line|safe }}
+          <br>
+        {% endfor %}
+        <h2>Decision</h2>
+        {% for decision_line in adr_record.decision %}
+          {{ decision_line|safe}}
+          <br>
+        {% endfor %}
     </div>
   </li>
   {% endfor %}

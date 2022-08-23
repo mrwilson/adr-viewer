@@ -8,6 +8,39 @@ import click
 from bottle import Bottle, run
 
 
+def extract_from_adr(page_object, find1, node1, node2, node3, txt):
+    context_section = page_object.find(find1, text=txt)
+
+    if context_section and context_section.nextSibling:
+        current_node = context_section.nextSibling
+
+        while current_node.name != find1 and current_node.nextSibling:
+            current_node = current_node.nextSibling
+
+            if current_node.name == node1:
+                yield current_node.text
+            elif current_node.name == node2:
+                yield from (li.text for li in current_node.children if li.name == node3)
+            else:
+                continue
+            
+            
+def extract_context_from_adr(page_object):
+    context_section = page_object.find('h2', text='Context')
+
+    if context_section and context_section.nextSibling:
+        current_node = context_section.nextSibling
+
+        while current_node.name != 'h2' and current_node.nextSibling:
+            current_node = current_node.nextSibling
+
+            if current_node.name == 'p':
+                yield current_node.text
+            elif current_node.name == 'ul':
+                yield from (li.text for li in current_node.children if li.name == "li")
+            else:
+                continue
+            
 def extract_date_from_adr(page_object):
     date_section = page_object.find('h1')
 
@@ -23,6 +56,7 @@ def extract_date_from_adr(page_object):
                 yield from (li.text for li in current_node.children if li.name == "li")
             else:
                 continue
+
 
 def extract_statuses_from_adr(page_object):
     status_section = page_object.find('h2', text='Status')
@@ -48,7 +82,9 @@ def parse_adr_to_config(path):
 
     status = list(extract_statuses_from_adr(soup))
     thedate = list(extract_date_from_adr(soup))[0].replace('Date: ', '')
-
+    context = list(extract_context_from_adr(soup))
+    decision = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Decision'))
+    
     if any([line.startswith("Amended by") for line in status]):
         status = 'amended'
     elif any([line.startswith("Accepted") for line in status]):
@@ -67,7 +103,9 @@ def parse_adr_to_config(path):
                 'status': status,
                 'date': thedate,
                 'body': adr_as_html,
-                'title': header.text
+                'title': header.text,
+                'context': context,
+                'decision': decision
             }
     else:
         return None

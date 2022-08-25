@@ -36,6 +36,7 @@ def parse_adr_to_config(path):
                                     ))[0].replace('Date: ', '')
     context = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Context'))
     decision = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Decision'))
+    consequences = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Consequences'))
 
     if any([line.startswith("Amended by") for line in status]):
         status = 'amended'
@@ -57,7 +58,8 @@ def parse_adr_to_config(path):
                 'body': adr_as_html,
                 'title': header.text,
                 'context': context,
-                'decision': decision
+                'decision': decision,
+                'consequences': consequences
             }
     else:
         return None

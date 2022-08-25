@@ -237,13 +237,18 @@
     </div>
     <div class='content'>
         <h2>Context</h2>
-        {% for context_line in adr_record.context %}
-          {{ context_line|safe }}
+        {% for aline in adr_record.context %}
+          {{ aline|safe }}
           <br>
         {% endfor %}
         <h2>Decision</h2>
-        {% for decision_line in adr_record.decision %}
-          {{ decision_line|safe}}
+        {% for aline in adr_record.decision %}
+          {{ aline|safe}}
+          <br>
+        {% endfor %}
+        <h2>Consequences</h2>
+        {% for aline in adr_record.consequences %}
+          {{ aline|safe}}
           <br>
         {% endfor %}
     </div>

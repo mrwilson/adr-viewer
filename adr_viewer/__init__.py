@@ -36,7 +36,46 @@ def parse_adr_to_config(path):
                                     ))[0].replace('Date: ', '')
     context = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Context'))
     decision = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Decision'))
-    consequences = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Consequences'))
+    consequences = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li',
+                                         'Consequences'))
+    references = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li',
+                                       'References'))
+
+    amended = []
+    amends = []
+    superceded = []
+    supercedes = []
+    drivenby = []
+    drives = []
+
+    ' Extract additional status supporting information'
+    for line in status:
+        if line.startswith("Superceded") or line.startswith("Superseded"):
+            for supercededlink in line.split('\n'):
+                ln = supercededlink.replace("Superseded by ", ""
+                                            ).replace("Superceded by ", "")
+                superceded.append(ln)
+        if line.startswith("Supercedes") or line.startswith("Supercedes"):
+            for supercedeslink in line.split('\n'):
+                ln = supercedeslink.replace("Supersedes ", ""
+                                            ).replace("Supercedes ", "")
+                supercedes.append(ln)
+        if line.startswith("Amended By"):
+            for amendedlink in line.split('\n'):
+                ln = amendedlink.replace("Amended by ", "")
+                amended.append(ln)
+        if line.startswith("Amends"):
+            for amendslink in line.split('\n'):
+                ln = amendslink.replace("Amends ", "")
+                amends.append(ln)
+        if line.startswith("Driven By"):
+            for drivenbylink in line.split('\n'):
+                ln = drivenbylink.replace("Driven by ", "")
+                drivenby.append(ln)
+        if line.startswith("Drives"):
+            for driveslink in line.split('\n'):
+                ln = driveslink.replace("Drives ", "")
+                drives.append(ln)
 
     if any([line.startswith("Amended by") for line in status]):
         status = 'amended'
@@ -59,7 +98,14 @@ def parse_adr_to_config(path):
                 'title': header.text,
                 'context': context,
                 'decision': decision,
-                'consequences': consequences
+                'consequences': consequences,
+                'references': references,
+                'superceded': superceded,
+                'supercedes': supercedes,
+                'amended': amended,
+                'amends': amends,
+                'drivenby': drivenby,
+                'drives': drives
             }
     else:
         return None

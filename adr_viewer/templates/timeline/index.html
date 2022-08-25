@@ -219,34 +219,87 @@
     {% endif %}
     <input class='radio' id='work{{ adr_record.index }}' name='works' type='radio' {{ checked }}>
     <div class="relative">
-      <label for='work{{ adr_record.index }}'>{{ adr_record.title }}
+
+      <label for='work{{ adr_record.index }}'>{{ adr_record.title }} 
+        (
+        {% set stat = adr_record.status %}
         {% if adr_record.status == "accepted" %}
-        <i class="adr-icon fas fa-fw fa-check"></i>
+        <em class="adr-icon fas fa-fw fa-check"></em>
         {% elif adr_record.status == "superseded" %}
-        <i class="adr-icon fas fa-fw fa-times"></i>
+        <em class="adr-icon fas fa-fw fa-times"></em>
         {% elif adr_record.status == "amended" %}
-        <i class="adr-icon fas fa-fw fa-arrow-down"></i>
+        <em class="adr-icon fas fa-fw fa-arrow-down"></em>
         {% elif adr_record.status == "pending" %}
-        <i class="adr-icon fas fa-fw fa-hourglass-half"></i>
+        <em class="adr-icon fas fa-fw fa-hourglass-half"></em>
         {% else %}
-        <i class="adr-icon fas fa-fw fa-question"></i>
+        <em class="adr-icon fas fa-fw fa-question"></em>
+        {% set stat = 'Unknown' %}
         {% endif %}
+        )
+        {{ stat|title }}
       </label>
       <span class='date'>{{ adr_record.date }}</span>
       <span class='circle'></span>
     </div>
     <div class='content'>
-        <h2>Context</h2>
+        {% if adr_record.superceded|length > 0 %}
+          <h3>Superceded by:</h3>
+          {% for aline in adr_record.superceded %}
+           {{ aline|safe }}
+            <br>
+          {% endfor %}  
+        {% endif %}
+        {% if adr_record.supercedes|length > 0 %}
+        <h3>Supercedes:</h3>
+        {% for aline in adr_record.supercedes %}
+          {{ aline|safe }}
+            <br>
+          {% endfor %}  
+        {% endif %}
+
+        {% if adr_record.amended|length > 0 %}
+          <h3>Amended by:</h3>
+          {% for aline in adr_record.amended %}
+           {{ aline|safe }}
+            <br>
+          {% endfor %}  
+        {% endif %}
+
+        {% if adr_record.amends|length > 0 %}
+          <h3>Amends:</h3>
+          {% for aline in adr_record.amends %}
+           {{ aline|safe }}
+            <br>
+          {% endfor %}  
+        {% endif %}
+
+        {% if adr_record.drivenby|length > 0 %}
+          <h3>Driven by:</h3>
+          {% for aline in adr_record.drivenby %}
+           {{ aline|safe }}
+            <br>
+          {% endfor %}  
+        {% endif %}
+
+        {% if adr_record.drives|length > 0 %}
+          <h3>Drives:</h3>
+          {% for aline in adr_record.drives %}
+           {{ aline|safe }}
+            <br>
+          {% endfor %}  
+        {% endif %}
+        
+        <h3>Context</h3>
         {% for aline in adr_record.context %}
           {{ aline|safe }}
           <br>
         {% endfor %}
-        <h2>Decision</h2>
+        <h3>Decision</h3>
         {% for aline in adr_record.decision %}
           {{ aline|safe}}
           <br>
         {% endfor %}
-        <h2>Consequences</h2>
+        <h3>Consequences</h3>
         {% for aline in adr_record.consequences %}
           {{ aline|safe}}
           <br>

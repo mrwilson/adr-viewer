@@ -9,10 +9,10 @@ from bottle import Bottle, run
 
 
 def extract_from_adr(page_object, find1, node1, node2, node3, txt):
-    context_section = page_object.find(find1, text=txt)
+    section = page_object.find(find1, text=txt)
 
-    if context_section and context_section.nextSibling:
-        current_node = context_section.nextSibling
+    if section and section.nextSibling:
+        current_node = section.nextSibling
 
         while current_node.name != find1 and current_node.nextSibling:
             current_node = current_node.nextSibling
@@ -20,57 +20,8 @@ def extract_from_adr(page_object, find1, node1, node2, node3, txt):
             if current_node.name == node1:
                 yield current_node.text
             elif current_node.name == node2:
-                yield from (li.text for li in current_node.children if li.name == node3)
-            else:
-                continue
-            
-            
-def extract_context_from_adr(page_object):
-    context_section = page_object.find('h2', text='Context')
-
-    if context_section and context_section.nextSibling:
-        current_node = context_section.nextSibling
-
-        while current_node.name != 'h2' and current_node.nextSibling:
-            current_node = current_node.nextSibling
-
-            if current_node.name == 'p':
-                yield current_node.text
-            elif current_node.name == 'ul':
-                yield from (li.text for li in current_node.children if li.name == "li")
-            else:
-                continue
-            
-def extract_date_from_adr(page_object):
-    date_section = page_object.find('h1')
-
-    if date_section and date_section.nextSibling:
-        current_node = date_section.nextSibling
-
-        while current_node.name != 'h1' and current_node.nextSibling:
-            current_node = current_node.nextSibling
-
-            if current_node.name == 'p':
-                yield current_node.text
-            elif current_node.name == 'ul':
-                yield from (li.text for li in current_node.children if li.name == "li")
-            else:
-                continue
-
-
-def extract_statuses_from_adr(page_object):
-    status_section = page_object.find('h2', text='Status')
-
-    if status_section and status_section.nextSibling:
-        current_node = status_section.nextSibling
-
-        while current_node.name != 'h2' and current_node.nextSibling:
-            current_node = current_node.nextSibling
-
-            if current_node.name == 'p':
-                yield current_node.text
-            elif current_node.name == 'ul':
-                yield from (li.text for li in current_node.children if li.name == "li")
+                yield from (li.text for li in
+                            current_node.children if li.name == node3)
             else:
                 continue
 
@@ -80,11 +31,12 @@ def parse_adr_to_config(path):
 
     soup = BeautifulSoup(adr_as_html, features='html.parser')
 
-    status = list(extract_statuses_from_adr(soup))
-    thedate = list(extract_date_from_adr(soup))[0].replace('Date: ', '')
-    context = list(extract_context_from_adr(soup))
+    status = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Status'))
+    thedate = list(extract_from_adr(soup, 'h1', 'p', 'ul', 'li', ''
+                                    ))[0].replace('Date: ', '')
+    context = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Context'))
     decision = list(extract_from_adr(soup, 'h2', 'p', 'ul', 'li', 'Decision'))
-    
+
     if any([line.startswith("Amended by") for line in status]):
         status = 'amended'
     elif any([line.startswith("Accepted") for line in status]):
@@ -161,12 +113,30 @@ def generate_content(path, template_dir_override=None, heading=None):
 
 
 @click.command()
-@click.option('--adr-path',      default='doc/adr/',      help='Directory containing ADR files.',         show_default=True)
-@click.option('--output',        default='index.html',    help='File to write output to.',                show_default=True)
-@click.option('--serve',         default=False,           help='Serve content at http://localhost:8000/', is_flag=True)
-@click.option('--port',          default=8000,            help='Change port for the server',              show_default=True)
-@click.option('--template-dir',  default=None,            help='Template directory.',                     show_default=True)
-@click.option('--heading',       default='ADR Viewer - ', help='ADR Page Heading',                        show_default=True)
+@click.option('--adr-path',
+              default='doc/adr/',
+              help='Directory containing ADR files.',
+              show_default=True)
+@click.option('--output',
+              default='index.html',
+              help='File to write output to.',
+              show_default=True)
+@click.option('--serve',
+              default=False,
+              help='Serve content at http://localhost:8000/',
+              is_flag=True)
+@click.option('--port',
+              default=8000,
+              help='Change port for the server',
+              show_default=True)
+@click.option('--template-dir',
+              default=None,
+              help='Template directory.',
+              show_default=True)
+@click.option('--heading',
+              default='ADR Viewer - ',
+              help='ADR Page Heading',
+              show_default=True)
 def main(adr_path, output, serve, port, template_dir, heading):
     content = generate_content(adr_path, template_dir, heading)
 
@@ -175,6 +145,7 @@ def main(adr_path, output, serve, port, template_dir, heading):
     else:
         with open(output, 'w') as out:
             out.write(content)
+
 
 if __name__ == '__main__':
     main()

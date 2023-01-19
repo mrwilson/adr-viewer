@@ -61,7 +61,7 @@ exclude_patterns = []
 #
 # html_theme = 'alabaster'
 
-html_logo = "_static/pyntel4004.svg"
+html_logo = ""
 
 
 # Add any paths that contain custom static files (such as style sheets) here,

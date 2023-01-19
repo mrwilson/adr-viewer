@@ -1,0 +1,143 @@
+# This Github Action will:
+#     jobs:
+#        build:                  install Python dependencies
+#                                run tests and lint with a single version of Python
+#        pypi-publish:           build and publish to PyPi (main branch only) - if build job passes
+#        documentation-publish:  build the sphinx-based documentation (release branch only) - if build job passes
+
+name: Build Pipeline
+
+on:
+  push:
+    branches:
+      # Push events to main branch
+      - main
+      # Push events to develop branch
+      - develop
+      # Push events to a release branch
+      - release/*
+      # Push events to a feature branch
+      - feature/*
+  pull_request:
+    branches:
+      # PR events to main branch
+      - main
+      # PR events to develop branch
+      - develop
+      # PR events to a release branch
+      - release/*
+
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.7", "3.8", "3.9", "3.10", pypy-3.8]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Get the current branch name
+      shell: bash
+      run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"; echo "Branch Name = ${GITHUB_REF#refs/heads/}"
+      id: branch_name
+    - name: Printing Github Context
+      env:
+        GITHUB_CONTEXT: ${{ toJSON(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Install dependencies
+      run: |
+        # Update pip and install flake8, pytest and coverage
+        python -m pip install --upgrade pip
+        pip install flake8 pytest coverage
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi  
+    - name: Lint with flake8
+      run: |
+        # Stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      working-directory: ./test
+      run: |
+        # Run all tests
+        pytest test_adr_viewer.py
+    - name: Test accessibility
+      working-directory: .
+      run: |
+        # Install accessibility suite
+        npm install -g pa11y
+        python setup.py install
+        adr-viewer --template-dir adr_viewer/templates
+        pa11y ./index.html --config pa11y.json
+  pypi-publish:
+    needs: [build, sonarcloud]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Get the current branch name
+      shell: bash
+      run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"; echo "Branch Name = ${GITHUB_REF#refs/heads/}"
+      id: branch_name
+    - name: Build and publish to pypi if on a release branch
+      working-directory: .
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_DEPLOY }}
+      run: |
+        BRANCH_NAME="${{ steps.branch_name.outputs.branch }}"
+        if [[ "${BRANCH_NAME:0:8}" = "release/" ]]; then
+        RELEASE_NAME="${BRANCH_NAME:8}"
+        echo "Release Name: ${RELEASE_NAME}" ;
+        echo "Publishing Release ${RELEASE_NAME} to PyPi"
+        python -m pip install build ;
+        python -m pip install twine ;
+        python -m build ;
+        python -m twine upload dist/* ;
+        fi
+  documentation-publish:
+    needs: [build, sonarcloud]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Get the current branch name
+      shell: bash
+      run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"; echo "Branch Name = ${GITHUB_REF#refs/heads/}"
+      id: branch_name
+    - name: Build documentation only if on release branch
+      working-directory: ./documentation
+      run: |
+        BRANCH_NAME="${{ steps.branch_name.outputs.branch }}"
+        if [[ "${BRANCH_NAME:0:8}" = "release/" ]]; then
+        RELEASE_NAME="${BRANCH_NAME:8}"
+        echo "Release Name: ${RELEASE_NAME}" ;
+        echo "Building Documentation for Release ${RELEASE_NAME}"
+        python -m pip install --user sphinx;
+        python -m pip install --user faculty_sphinx_theme;
+        make html;
+        fi
+

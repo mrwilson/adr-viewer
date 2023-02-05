@@ -83,7 +83,7 @@ def parse_adr_to_config(path):
         status = 'accepted'
     elif any([line.startswith("Superseded by") for line in status]):
         status = 'superseded'
-    elif any([line.startswith("Pending") for line in status]):
+    elif any([line.startswith("Proposed") or line.startswith("Pending") for line in status]):
         status = 'pending'
     else:
         status = 'unknown'

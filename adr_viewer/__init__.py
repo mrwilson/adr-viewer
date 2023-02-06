@@ -55,7 +55,7 @@ def parse_adr_to_config(path):
                 ln = supercededlink.replace("Superseded by ", ""
                                             ).replace("Superceded by ", "")
                 superceded.append(ln)
-        if line.startswith("Supercedes") or line.startswith("Supercedes"):
+        if line.startswith("Supersedes") or line.startswith("Supercedes"):
             for supercedeslink in line.split('\n'):
                 ln = supercedeslink.replace("Supersedes ", ""
                                             ).replace("Supercedes ", "")

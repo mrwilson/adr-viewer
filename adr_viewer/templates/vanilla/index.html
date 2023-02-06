@@ -6,7 +6,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-        <title>ADR Viewer - {{ config.project_title }}</title>
+        <title>{{ config.heading }}</title>
 
         <style type="text/css">
             body {
@@ -63,7 +63,7 @@
     </head>
     <body>
         <header>
-            <h1>ADR Viewer - {{ config.project_title }}</h1>
+            <h1>{{ config.heading }}</h1>
         </header>
         <div class="panel-group">
             {% for adr_record in config.records %}

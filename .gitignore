@@ -4,3 +4,4 @@ dist/
 build/
 adr_viewer.egg-info/
 .pytest_cache/
+.DS_Store

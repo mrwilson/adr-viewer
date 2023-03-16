@@ -19,6 +19,14 @@ Show off your Architecture Decision Records with an easy-to-navigate web page, e
 $ pip install adr-viewer
 ```
 
+### From Homebrew
+
+```bash
+$ brew install adr-viewer
+```
+
+See also the [`adr-viewer` formula page](https://formulae.brew.sh/formula/adr-viewer).
+
 ### From local build
 
 adr-viewer requires Python 3.7 or higher (with Pip)

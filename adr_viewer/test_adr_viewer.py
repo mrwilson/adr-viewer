@@ -1,4 +1,6 @@
-from adr_viewer import parse_adr_to_config, render_html
+import tempfile
+
+from adr_viewer import parse_adr_to_config, render_html, resolve_adr_dir
 
 
 def test_should_extract_title_from_record():
@@ -86,3 +88,19 @@ def test_should_ignore_invalid_files():
     config = parse_adr_to_config('test/adr/0003-bad-formatting.md')
 
     assert config is None
+
+
+def test_resolve_adr_path_default():
+    assert resolve_adr_dir() == "doc/adr/"
+
+
+def test_resolve_adr_path_explicit():
+    assert resolve_adr_dir("docs/adrs") == "docs/adrs"
+
+
+def test_resolve_adr_path_adrdir():
+    test_adr_dir_content = "just a test  "
+    with tempfile.NamedTemporaryFile('w') as tmpfile:
+        tmpfile.write(test_adr_dir_content)
+        tmpfile.flush()
+        assert resolve_adr_dir(None, adr_dir_file=tmpfile.name) == test_adr_dir_content.strip()

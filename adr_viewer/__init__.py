@@ -103,13 +103,39 @@ def generate_content(path, template_dir_override=None):
     return render_html(config, template_dir_override)
 
 
+CONVENTIONAL_ADR_DIR = 'doc/adr/'
+DEFAULT_ADR_DIR_FILE = '.adr-dir'
+
+
+def resolve_adr_dir(maybe_dir=None, adr_dir_file=DEFAULT_ADR_DIR_FILE):
+    """
+    If passed something, blindly use it. Otherwise, resolve based on
+    conventions in the ADR tooling ecosystem.
+    """
+    def lookup():
+        adr_dir = CONVENTIONAL_ADR_DIR
+        if os.path.exists(adr_dir_file):
+            with open(adr_dir_file, 'r') as file:
+                adr_dir = file.read().strip()
+        return adr_dir
+
+    return maybe_dir if maybe_dir else lookup()
+
+
 @click.command()
-@click.option('--adr-path',      default='doc/adr/',   help='Directory containing ADR files.',         show_default=True)
+@click.option('--adr-path',
+              default=None,
+              help=f"""
+                Directory containing ADR files; pass explicitly,
+                read {DEFAULT_ADR_DIR_FILE} if it exists or uses {CONVENTIONAL_ADR_DIR}
+              """,
+              show_default=True)
 @click.option('--output',        default='index.html', help='File to write output to.',                show_default=True)
 @click.option('--serve',         default=False,        help='Serve content at http://localhost:8000/', is_flag=True)
 @click.option('--port',          default=8000,         help='Change port for the server',              show_default=True)
 @click.option('--template-dir',  default=None,         help='Template directory.',                     show_default=True)
 def main(adr_path, output, serve, port, template_dir):
+    adr_path = resolve_adr_dir(adr_path)
     content = generate_content(adr_path, template_dir)
 
     if serve:

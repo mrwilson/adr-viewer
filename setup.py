@@ -6,7 +6,6 @@ with open("README.md", "r") as fh:
 setup(
     name='adr-viewer',
     url='https://github.com/mrwilson/adr-viewer',
-    version='1.3.0',
     description='A visualisation tool for Architecture Decision Records',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -34,5 +33,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
-    ]
+    ],
+    use_scm_version=True,
+    setup_requires=["setuptools_scm"],
 )

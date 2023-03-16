@@ -6,7 +6,7 @@ Show off your Architecture Decision Records with an easy-to-navigate web page, e
 
 ## Examples
 
-<img src="images/example.png" height="500px"/>
+<img src="https://github.com/mrwilson/adr-viewer/raw/master/images/example.png" height="500px"/>
 
 * Example above using Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools) project
 * This project exposes its own Architecture Decision Records [here](https://mrwilson.github.io/adr-viewer/index.html)
@@ -46,4 +46,4 @@ The default for `--adr-path` is `doc/adr/` because this is the default path gene
 
 ## Supported Record Types
 
-<img src="images/record_types.png"/>
+<img src="https://github.com/mrwilson/adr-viewer/raw/master/images/record_types.png"/>

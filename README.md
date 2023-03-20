@@ -37,6 +37,7 @@ Usage: adr-viewer [OPTIONS]
 Options:
   --adr-path TEXT  Directory containing ADR files.  [default: doc/adr/]
   --output TEXT    File to write output to.  [default: index.html]
+  --title TEXT     The project title   [default: the basename of the current directory]
   --serve          Serve content at http://localhost:8000/
   --port INT       Custom server port [default: 8000]
   --help           Show this message and exit.

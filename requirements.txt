@@ -1,6 +1,6 @@
-click
-mistune
-bs4
-jinja2
-pytest
 bottle
+bs4
+click
+jinja2
+mistune
+toml

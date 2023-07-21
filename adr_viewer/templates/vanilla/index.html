@@ -5,7 +5,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.2/css/all.css">
+
         <title>{{ config.heading }}</title>
 
         <style type="text/css">
@@ -16,6 +17,7 @@
                 align-items: center;
                 justify-items: center;
                 grid-template-rows: 2fr minmax(80%, auto) 2fr;
+                background-color: {{ config.page['background-color'] }};
             }
 
             @media only screen and (min-width: 1025px) {
@@ -33,27 +35,27 @@
             }
 
             .panel-heading.adr-accepted {
-                background-color: lightgreen;
+                background-color: {{ config.accepted['background-color'] }};
             }
 
             .panel-heading.adr-superseded {
-                background-color: lightgrey;
+                background-color: {{ config.superseded['background-color'] }};
             }
 
             .panel-heading.adr-amended {
-                background-color: yellow;
+                background-color: {{ config.amended['background-color'] }};
             }
 
             .panel-heading.adr-unknown {
-                background-color: white;
+                background-color: {{ config.unknown['background-color'] }};
             }
 
             .panel-heading.adr-pending {
-                background-color: lightblue;
+                background-color: {{ config.pending['background-color'] }};
             }
 
             .adr-superseded > .panel-title > a {
-                text-decoration: line-through;
+                text-decoration: {{ config.superseded['text-decoration'] }};
             }
 
             .adr-icon {
@@ -65,6 +67,7 @@
         <header>
             <h1>{{ config.heading }}</h1>
         </header>
+        {% set icon_root = 'adr-icon fas fa-fw' %}
         <div class="panel-group">
             {% for adr_record in config.records %}
             <div class="panel panel-default">
@@ -73,15 +76,20 @@
                         <a data-toggle="collapse" href="#collapse{{ adr_record.index }}">{{ adr_record.title }}</a>
 
                         {% if adr_record.status == "accepted" %}
-                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        <em class="{{icon_root}} {{ config.accepted['icon'] }}"
+                        title="Status is Accepted"> </em>
                         {% elif adr_record.status == "superseded" %}
-                        <i class="adr-icon fas fa-fw fa-times"></i>
+                        <embed class="{{icon_root}} {{ config.superseded['icon'] }}"
+                        title="Status is Superseded"> </em>
                         {% elif adr_record.status == "amended" %}
-                        <i class="adr-icon fas fa-fw fa-arrow-down"></i>
+                        <em class="{{icon_root}} {{ config.amended['icon'] }}"
+                        title="Status is Amended"></em>
                         {% elif adr_record.status == "pending" %}
-                        <i class="adr-icon fas fa-fw fa-hourglass-half"></i>
+                        <em class="{{icon_root}} {{ config.pending['icon'] }}"
+                        title="Status is Pending"> </em>
                         {% else %}
-                        <i class="adr-icon fas fa-fw fa-question"></i>
+                        <em class="{{icon_root}} {{ config.unknown['icon'] }}"
+                        title="Status is Unknown"> </em>
                         {% endif %}
 
                     </h4>
@@ -93,7 +101,7 @@
             {% endfor %}
         </div>
         <footer>
-            Generated with <3 using ADR Viewer
+            Generated with &lt3 using ADR Viewer
         </footer>
     </body>
 </html>

@@ -1,0 +1,32 @@
+# Configuration for adr-viewer
+# in TOML format http://toml.io
+
+title = "TOML Configuration for adr-viewer look and feel"
+
+[page]
+# Properties for the page
+background-color            = "white"
+
+[status]
+# Properties for the bars that display each ADR
+
+# Accepted
+accepted.icon               = "fa-check"
+accepted.background-color   = "lightgreen"
+
+# Amended
+amended.icon                = "fa-arrow-down"
+amended.background-color    = "yellow"
+
+# Pending
+pending.icon                = "fa-hourglass-half"
+pending.background-color    = "lightblue"
+
+# Superseded
+superseded.icon             = "fa-times"
+superseded.background-color = "lightgrey"
+superseded.text-decoration  = "line-through"
+
+# Unknown
+unknown.icon                = "fa-question"
+unknown.background-color    = "white"

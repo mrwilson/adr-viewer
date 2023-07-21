@@ -19,13 +19,14 @@ setup(
         'mistune',
         'bs4',
         'jinja2',
-        'bottle'
+        'bottle',
+        'toml'
     ),
     package_data={
-        'adr_viewer': ['templates/index.html'],
+        'adrviewer': ['adr_viewer/templates/vanilla/index.html'],
     },
     entry_points={
-        'console_scripts': ['adr-viewer=adr_viewer:main']
+        'console_scripts': ['adr-viewer=adr_viewer.adrviewer:main']
     },
     classifiers=[
         'License :: OSI Approved :: MIT License',

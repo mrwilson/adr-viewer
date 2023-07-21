@@ -40,7 +40,7 @@ Options:
   --output TEXT        File to write output to.  [default: index.html]
   --serve              Serve content at http://localhost:8000/
   --port INTEGER       Change port for the server  [default: 8000]
-  --template-dir TEXT  Template directory.
+  --template-dir TEXT  Template directory [default: templates/vanilla]
   --heading TEXT       ADR Page Heading  [default: ADR Viewer - ]
   --config TEXT        Configuration settings  [default: config.toml]
   --help               Show this message and exit.

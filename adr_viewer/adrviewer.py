@@ -130,7 +130,7 @@ def parse_adr_to_config(path):
 def render_html(config, template_dir_override=None):
 
     env = Environment(
-        loader=PackageLoader('adr_viewer', 'templates') if template_dir_override is None else FileSystemLoader(template_dir_override),  # noqa
+        loader=PackageLoader('adr_viewer', 'templates/vanilla') if template_dir_override is None else FileSystemLoader(template_dir_override),  # noqa
         autoescape=select_autoescape(['html', 'xml'])
     )
 

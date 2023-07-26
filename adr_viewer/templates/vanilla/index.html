@@ -73,7 +73,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading adr-{{ adr_record.status }}">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#collapse{{ adr_record.index }}">{{ adr_record.title }}</a>
+                        <a data-toggle="collapse" id="{{ adr_record.title }}" href="#collapse{{ adr_record.index }}">{{ adr_record.title }}</a>
 
                         {% if adr_record.status == "accepted" %}
                         <em class="{{icon_root}} {{ config.accepted['icon'] }}"
@@ -104,4 +104,27 @@
             Generated with &lt3 using ADR Viewer
         </footer>
     </body>
+    <script>
+
+        // Listens for click events on the anchor tags
+        // Should the target end with ".md", it's not a real web link
+        // navigate to the ADR element instead.
+        $( "a" ).click(function(event) {
+            let href = event.target.href;
+            if (href.endsWith(".md")) {
+                event.preventDefault(); // prevent navigation
+                navigateToAdr(navigateToAdr(event.target.textContent));
+            }
+        });
+
+        function navigateToAdr(adrElementId) {
+            let element = document.getElementById(adrElementId);
+            if (element.getAttribute("aria-expanded") === undefined || element.getAttribute("aria-expanded") === null
+                || element.getAttribute("aria-expanded") === false) {
+                element.click();
+            }
+            element.scrollIntoView();
+        }
+
+    </script>
 </html>

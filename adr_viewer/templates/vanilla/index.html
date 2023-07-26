@@ -113,7 +113,7 @@
             let href = event.target.href;
             if (href.endsWith(".md")) {
                 event.preventDefault(); // prevent navigation
-                navigateToAdr(navigateToAdr(event.target.textContent));
+                navigateToAdr(event.target.textContent);
             }
         });
 

@@ -1,6 +1,6 @@
 # adr-viewer
 
-[![Build Status](https://travis-ci.org/mrwilson/adr-viewer.svg?branch=master)](https://travis-ci.org/mrwilson/adr-viewer)
+[![Latest Version](https://img.shields.io/pypi/v/adr-viewer)](https://pypi.org/project/adr-viewer/)
 
 Show off your Architecture Decision Records with an easy-to-navigate web page, either as a local web-server or generated static content.
 

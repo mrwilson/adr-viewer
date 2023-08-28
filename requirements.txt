@@ -1,7 +1,7 @@
-click
-mistune
-bs4
-jinja2
-pytest
-bottle
-mypy
+click==8.1.7
+mistune==3.0.1
+beautifulsoup4==4.10.0
+Jinja2==3.1.2
+pytest==7.4.0
+bottle==0.12.25
+mypy==1.5.1

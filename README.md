@@ -1,12 +1,12 @@
 # adr-viewer
 
-[![Build Status](https://travis-ci.org/mrwilson/adr-viewer.svg?branch=master)](https://travis-ci.org/mrwilson/adr-viewer)
+[![Latest Version](https://img.shields.io/pypi/v/adr-viewer)](https://pypi.org/project/adr-viewer/)
 
 Show off your Architecture Decision Records with an easy-to-navigate web page, either as a local web-server or generated static content.
 
 ## Examples
 
-<img src="images/example.png" height="500px"/>
+<img src="https://github.com/mrwilson/adr-viewer/raw/master/images/example.png" height="500px"/>
 
 * Example above using Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools) project
 * This project exposes its own Architecture Decision Records [here](https://mrwilson.github.io/adr-viewer/index.html)
@@ -18,6 +18,14 @@ Show off your Architecture Decision Records with an easy-to-navigate web page, e
 ```bash
 $ pip install adr-viewer
 ```
+
+### From Homebrew
+
+```bash
+$ brew install adr-viewer
+```
+
+See also the [`adr-viewer` formula page](https://formulae.brew.sh/formula/adr-viewer).
 
 ### From local build
 
@@ -38,6 +46,7 @@ Options:
   --adr-path TEXT      Directory containing ADR files; pass explicitly, read
                        .adr-dir if it exists or uses doc/adr/
   --output TEXT        File to write output to.  [default: index.html]
+  --title TEXT         The project title   [default: the basename of the current directory]
   --serve              Serve content at http://localhost:8000/
   --port INTEGER       Change port for the server  [default: 8000]
   --template-dir TEXT  Template directory.
@@ -50,4 +59,4 @@ following the `adr-tools` convention for overrides.
 
 ## Supported Record Types
 
-<img src="images/record_types.png"/>
+<img src="https://github.com/mrwilson/adr-viewer/raw/master/images/record_types.png"/>

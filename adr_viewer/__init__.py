@@ -1,3 +1,5 @@
+from typing import List, Iterator, Optional, Dict
+
 import glob
 from jinja2.loaders import FileSystemLoader
 import mistune
@@ -8,7 +10,7 @@ import click
 from bottle import Bottle, run
 
 
-def extract_statuses_from_adr(page_object):
+def extract_statuses_from_adr(page_object) -> Iterator[str]:
     status_section = page_object.find('h2', text='Status')
 
     if status_section and status_section.nextSibling:
@@ -25,20 +27,20 @@ def extract_statuses_from_adr(page_object):
                 continue
 
 
-def parse_adr_to_config(path):
+def parse_adr_to_config(path) -> Optional[Dict]:
     adr_as_html = mistune.markdown(open(path).read())
 
     soup = BeautifulSoup(adr_as_html, features='html.parser')
 
-    status = list(extract_statuses_from_adr(soup))
+    statuses = list(extract_statuses_from_adr(soup))
 
-    if any([line.startswith("Amended by") for line in status]):
+    if any([line.startswith("Amended by") for line in statuses]):
         status = 'amended'
-    elif any([line.startswith("Accepted") for line in status]):
+    elif any([line.startswith("Accepted") for line in statuses]):
         status = 'accepted'
-    elif any([line.startswith("Superseded by") for line in status]):
+    elif any([line.startswith("Superseded by") for line in statuses]):
         status = 'superseded'
-    elif any([line.startswith("Pending") for line in status]):
+    elif any([line.startswith("Proposed") or line.startswith("Pending") for line in statuses]):
         status = 'pending'
     else:
         status = 'unknown'
@@ -55,7 +57,7 @@ def parse_adr_to_config(path):
         return None
 
 
-def render_html(config, template_dir_override=None):
+def render_html(config, template_dir_override=None) -> str:
 
     env = Environment(
         loader=PackageLoader('adr_viewer', 'templates') if template_dir_override is None else FileSystemLoader(template_dir_override),
@@ -67,25 +69,25 @@ def render_html(config, template_dir_override=None):
     return template.render(config=config)
 
 
-def get_adr_files(path):
+def get_adr_files(path) -> List[str]:
     files = glob.glob(path)
     files.sort()
     return files
 
 
-def run_server(content, port):
+def run_server(content, port) -> None:
     print(f'Starting server at http://localhost:{port}/')
     app = Bottle()
     app.route('/', 'GET', lambda: content)
     run(app, host='localhost', port=port, quiet=True)
 
 
-def generate_content(path, template_dir_override=None):
+def generate_content(path, template_dir_override=None, title=None) -> str:
 
     files = get_adr_files("%s/*.md" % path)
 
     config = {
-        'project_title': os.path.basename(os.getcwd()),
+        'project_title': title if title else os.path.basename(os.getcwd()),
         'records': []
     }
 
@@ -106,11 +108,12 @@ def generate_content(path, template_dir_override=None):
 @click.command()
 @click.option('--adr-path',      default='doc/adr/',   help='Directory containing ADR files.',         show_default=True)
 @click.option('--output',        default='index.html', help='File to write output to.',                show_default=True)
+@click.option('--title',         default=None,         help='Set the project title',                   show_default=True)
 @click.option('--serve',         default=False,        help='Serve content at http://localhost:8000/', is_flag=True)
 @click.option('--port',          default=8000,         help='Change port for the server',              show_default=True)
 @click.option('--template-dir',  default=None,         help='Template directory.',                     show_default=True)
-def main(adr_path, output, serve, port, template_dir):
-    content = generate_content(adr_path, template_dir)
+def main(adr_path, output, title, serve, port, template_dir) -> None:
+    content = generate_content(adr_path, template_dir, title)
 
     if serve:
         run_server(content, port)

@@ -3,6 +3,7 @@
 [![Latest Version](https://img.shields.io/pypi/v/adr-viewer)](https://pypi.org/project/adr-viewer/)
 
 Show off your Architecture Decision Records with an easy-to-navigate web page, either as a local web-server or generated static content.
+Include diagrams in [Mermaid](https://mermaid.js.org) format using code blocks/fences, e.g. [test ADR 5](test/adr/0005-has-mermaid.md).
 
 ## Examples
 

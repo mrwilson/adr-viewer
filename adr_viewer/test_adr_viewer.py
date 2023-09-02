@@ -90,3 +90,31 @@ def test_should_ignore_invalid_files():
     config = parse_adr_to_config('test/adr/0003-bad-formatting.md')
 
     assert config is None
+
+
+def test_should_detect_mermaid():
+    config = parse_adr_to_config('test/adr/0005-has-mermaid.md')
+
+    assert config['includes_mermaid']
+
+
+def test_should_not_detect_mermaid():
+    config = parse_adr_to_config('test/adr/0004-proposed-status.md')
+
+    assert not config['includes_mermaid']
+
+
+def test_should_render_html_with_mermaid():
+    html = render_html({
+        'include_mermaid': True
+    })
+
+    assert 'mermaid.min.js' in html
+
+
+def test_should_render_html_without_mermaid():
+    html = render_html({
+        'include_mermaid': False
+    })
+
+    assert 'mermaid.min.js' not in html

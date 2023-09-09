@@ -7,7 +7,8 @@ import os
 from bs4 import BeautifulSoup
 from jinja2 import Environment, PackageLoader, select_autoescape
 import click
-from bottle import Bottle, run
+
+from adr_viewer.server import run_server
 
 
 def extract_statuses_from_adr(page_object) -> Iterator[str]:
@@ -73,13 +74,6 @@ def get_adr_files(path) -> List[str]:
     files = glob.glob(path)
     files.sort()
     return files
-
-
-def run_server(content, port) -> None:
-    print(f'Starting server at http://localhost:{port}/')
-    app = Bottle()
-    app.route('/', 'GET', lambda: content)
-    run(app, host='localhost', port=port, quiet=True)
 
 
 def generate_content(path, template_dir_override=None, title=None) -> str:

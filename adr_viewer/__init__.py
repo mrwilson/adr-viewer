@@ -1,14 +1,13 @@
 from typing import List, Iterator, Optional, Dict
 
 import glob
-from jinja2.loaders import FileSystemLoader
 import mistune
 import os
 from bs4 import BeautifulSoup
-from jinja2 import Environment, PackageLoader, select_autoescape
 import click
 
 from adr_viewer.server import run_server
+from adr_viewer.render import render_html
 
 
 def extract_statuses_from_adr(page_object) -> Iterator[str]:
@@ -56,18 +55,6 @@ def parse_adr_to_config(path) -> Optional[Dict]:
             }
     else:
         return None
-
-
-def render_html(config, template_dir_override=None) -> str:
-
-    env = Environment(
-        loader=PackageLoader('adr_viewer', 'templates') if template_dir_override is None else FileSystemLoader(template_dir_override),
-        autoescape=select_autoescape(['html', 'xml'])
-    )
-
-    template = env.get_template('index.html')
-
-    return template.render(config=config)
 
 
 def get_adr_files(path) -> List[str]:

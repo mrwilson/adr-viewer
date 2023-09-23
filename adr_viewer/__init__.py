@@ -4,7 +4,7 @@ from typing import List
 
 import click
 
-from adr_viewer.parse import parse_adr_to_config
+from adr_viewer.parse import parse_adr
 from adr_viewer.render import render_html
 from adr_viewer.server import run_server
 
@@ -26,7 +26,7 @@ def generate_content(path, template_dir_override=None, title=None) -> str:
 
     for index, adr_file in enumerate(files):
 
-        adr_attributes = parse_adr_to_config(adr_file)
+        adr_attributes = parse_adr(adr_file)
 
         if adr_attributes:
             adr_attributes.index = index

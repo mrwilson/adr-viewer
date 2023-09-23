@@ -30,7 +30,7 @@ def extract_statuses_from_adr(page_object) -> Iterator[str]:
                 continue
 
 
-def parse_adr_to_config(path) -> Optional[Adr]:
+def parse_adr(path) -> Optional[Adr]:
     adr_as_html = mistune.markdown(open(path).read())
 
     soup = BeautifulSoup(adr_as_html, features='html.parser')

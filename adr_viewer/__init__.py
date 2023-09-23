@@ -25,8 +25,8 @@ def generate_content(path, template_dir_override=None, title=None) -> str:
     }
 
     for index, adr_file in enumerate(files):
-
-        adr_attributes = parse_adr(adr_file)
+        markdown = open(adr_file).read()
+        adr_attributes = parse_adr(markdown)
 
         if adr_attributes:
             adr_attributes.index = index

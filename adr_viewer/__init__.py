@@ -29,7 +29,7 @@ def generate_content(path, template_dir_override=None, title=None) -> str:
         adr_attributes = parse_adr_to_config(adr_file)
 
         if adr_attributes:
-            adr_attributes['index'] = index
+            adr_attributes.index = index
 
             config['records'].append(adr_attributes)
         else:

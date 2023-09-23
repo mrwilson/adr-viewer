@@ -1,7 +1,16 @@
 from typing import Iterator, Optional, Dict
 from bs4 import BeautifulSoup
+from dataclasses import dataclass
 
 import mistune
+
+
+@dataclass
+class Adr:
+    title: str
+    status: str
+    body: str
+    index: int = 0
 
 
 def extract_statuses_from_adr(page_object) -> Iterator[str]:

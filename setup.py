@@ -32,6 +32,8 @@ setup(
         'Topic :: Software Development :: Documentation',
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
     use_scm_version=True,
     setup_requires=["setuptools_scm"],

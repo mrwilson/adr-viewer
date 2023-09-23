@@ -30,6 +30,9 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+    - name: Check formatting
+      run: black --check adr_viewer
+      if: ${{ matrix.python_version >= 3.8 }}
     - name: Run tests
       run: pytest
     - name: Run typecheck

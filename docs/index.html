@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+        <title>ADR Viewer - adr-viewer</title>
+
+        <style type="text/css">
+            body {
+                display: grid;
+                width: auto;
+                height: auto;
+                align-items: center;
+                justify-items: center;
+                grid-template-rows: 2fr minmax(80%, auto) 2fr;
+            }
+
+            @media only screen and (min-width: 1025px) {
+                body {
+                    grid-template-columns: 1fr 3fr 1fr;
+                }
+
+                header, .panel-group, footer {
+                    grid-column: 2;
+                }
+            }
+
+            .panel-group {
+                width: 100%
+            }
+
+            .panel-heading.adr-accepted {
+                background-color: lightgreen;
+            }
+
+            .panel-heading.adr-superseded {
+                background-color: lightgrey;
+            }
+
+            .panel-heading.adr-amended {
+                background-color: yellow;
+            }
+
+            .panel-heading.adr-unknown {
+                background-color: white;
+            }
+
+            .panel-heading.adr-pending {
+                background-color: lightblue;
+            }
+
+            .adr-superseded > .panel-title > a {
+                text-decoration: line-through;
+            }
+
+            .adr-icon {
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>ADR Viewer - adr-viewer</h1>
+        </header>
+        <div class="panel-group">
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-accepted">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse0">1. Record architecture decisions</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        
+
+                    </h4>
+                </div>
+                <div id="collapse0" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>1. Record architecture decisions</h1>
+<p>Date: 2018-09-02</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>We need to record the architectural decisions made on this project.</p>
+<h2>Decision</h2>
+<p>We will use Architecture Decision Records, as <a href="http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions">described by Michael Nygard</a>.</p>
+<h2>Consequences</h2>
+<p>See Michael Nygard's article, linked above. For a lightweight ADR toolset, see Nat Pryce's <a href="https://github.com/npryce/adr-tools">adr-tools</a>.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-accepted">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">2. Expose command line interface</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        
+
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>2. Expose command line interface</h1>
+<p>Date: 2018-09-02</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>We want to maximise the usability of adr-viewer whilst maintaining flexibility in future for other output formats, e.g. a live webserver.</p>
+<h2>Decision</h2>
+<p>The entry point for this project will be a command-line utility called <code>adr-viewer</code>. We will use the python <a href="http://click.pocoo.org/5/">click</a> library to provide command-line options and documentation.</p>
+<h2>Consequences</h2>
+<p>Click will be added as a dependency, and further improvements should consider the user experience of the command-line interface.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-superseded">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2">3. Use same colour for all headers</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-times"></i>
+                        
+
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>3. Use same colour for all headers</h1>
+<p>Date: 2018-09-09</p>
+<h2>Status</h2>
+<p>Superseded by <a href="0004-distinguish-superseded-records-with-colour.md">4. Distinguish superseded records with colour</a></p>
+<h2>Context</h2>
+<p><code>adr-viewer</code> presents all records with the same <code>lightgreen</code> header, even though records may be in different states.</p>
+<h2>Decision</h2>
+<p>We will keep the <code>lightgreen</code> colour for everything</p>
+<h2>Consequences</h2>
+<p>No work necessary to support ADRs superceding eachother.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-amended">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse3">4. Distinguish superseded records with colour</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-arrow-down"></i>
+                        
+
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>4. Distinguish superseded records with colour</h1>
+<p>Date: 2018-09-09</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<p>Supercedes <a href="0003-use-same-colour-for-all-headers.md">3. Use same colour for all headers</a></p>
+<p>Amended by <a href="0005-distinguish-amendments-to-records-with-colour.md">5. Distinguish amendments to records with colour</a></p>
+<h2>Context</h2>
+<p><code>adr-viewer</code> presents all records with the same <code>lightgreen</code> header, even though records may be in different states.</p>
+<h2>Decision</h2>
+<p>Records marked as 'Superseded' will distinguish themselves from 'Accepted'</p>
+<h2>Consequences</h2>
+<p>We must invest time thinking about the user experience for this visual indication - whether or not simply greying out is sufficient.</p>
+<p>We must also offer a default display if logic for processing a custom linkage does not exist in this project.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-accepted">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse4">5. Distinguish amendments to records with colour</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        
+
+                    </h4>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>5. Distinguish amendments to records with colour</h1>
+<p>Date: 2018-09-09</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<p>Amends <a href="0004-distinguish-superseded-records-with-colour.md">4. Distinguish superseded records with colour</a></p>
+<h2>Context</h2>
+<p>Architecture Decision Records may be <code>amended</code> rather than <code>superseded</code> if e.g. only a small part of the decision changes.</p>
+<h2>Decision</h2>
+<p>Amended records, although not officially supported as a distinct flag in <code>adr-tools</code>, should be distinguished from records that are either Accepted or Superseded by.</p>
+<h2>Consequences</h2>
+<p>We now have to map 4 kinds of status to different formatting options, which presents a refactoring opportunity.</p>
+</div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading adr-accepted">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse5">6. Accessibility as a first-class concern</a>
+
+                        
+                        <i class="adr-icon fas fa-fw fa-check"></i>
+                        
+
+                    </h4>
+                </div>
+                <div id="collapse5" class="panel-collapse collapse">
+                    <div class="panel-body"><h1>6. Accessibility as a first-class concern</h1>
+<p>Date: 2018-09-10</p>
+<h2>Status</h2>
+<p>Accepted</p>
+<h2>Context</h2>
+<p>This tool had, up until this point, made assumptions about how its users might interpret the information it presents (for example, using colour as the main mechanism of distinguishing record types)</p>
+<h2>Decision</h2>
+<p>Accessibility will now be a first-class concern of this project. All future design decisions should bear this in mind.</p>
+<h2>Consequences</h2>
+<p>A base level of accessibility testing has been integrated using <a href="https://github.com/pa11y/pa11y">pa11y</a>.</p>
+<p>This project should be (at minimum) run through a screen reader and tested for usability.</p>
+</div>
+                </div>
+            </div>
+            
+        </div>
+        <footer>
+            Generated with <3 using ADR Viewer
+        </footer>
+    </body>
+</html>

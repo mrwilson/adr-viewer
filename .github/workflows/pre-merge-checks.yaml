@@ -16,7 +16,6 @@ jobs:
       fail-fast: false
       matrix:
         python_version:
-          - '3.7'
           - '3.8'
           - '3.9'
           - '3.10'
@@ -30,6 +29,8 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+    - name: Check formatting
+      run: black --check adr_viewer
     - name: Run tests
       run: pytest
     - name: Run typecheck

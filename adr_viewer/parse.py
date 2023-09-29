@@ -53,14 +53,14 @@ def parse_adr(content: str) -> Optional[Adr]:
 
     header = soup.find("h1")
 
-    includes_mermaid = soup.find(name='code', attrs={'class': 'language-mermaid'})
+    includes_mermaid = soup.find(name="code", attrs={"class": "language-mermaid"})
 
     if header:
         return Adr(
             title=header.text,
             status=status,
             body=adr_as_html,
-            includes_mermaid=includes_mermaid
+            includes_mermaid=includes_mermaid,
         )
     else:
         return None

@@ -33,16 +33,12 @@ def test_should_render_html_with_collapsible_index():
 
 
 def test_should_render_html_with_mermaid():
-    html = render_html({
-        'include_mermaid': True
-    })
+    html = render_html({"include_mermaid": True})
 
-    assert 'mermaid.min.js' in html
+    assert "mermaid.min.js" in html
 
 
 def test_should_render_html_without_mermaid():
-    html = render_html({
-        'include_mermaid': False
-    })
+    html = render_html({"include_mermaid": False})
 
-    assert 'mermaid.min.js' not in html
+    assert "mermaid.min.js" not in html

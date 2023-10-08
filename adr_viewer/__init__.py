@@ -24,13 +24,13 @@ def generate_content(path, template_dir_override=None, title=None) -> str:
 
     for index, adr_file in enumerate(files):
         markdown = open(adr_file).read()
-        adr_attributes = parse_adr(markdown)
+        adr = parse_adr(markdown)
 
-        if adr_attributes:
-            adr_attributes.index = index
-            adr_attributes.includes_mermaid |= config.include_mermaid
+        if adr:
+            adr.index = index
+            adr.includes_mermaid |= config.include_mermaid
 
-            config.records.append(adr_attributes)
+            config.records.append(adr)
         else:
             print("Could not parse %s in ADR format, ignoring." % adr_file)
 

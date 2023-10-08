@@ -1,5 +1,17 @@
+from dataclasses import dataclass
+from typing import List
+
 from jinja2 import Environment, PackageLoader, select_autoescape
 from jinja2.loaders import FileSystemLoader, BaseLoader
+
+from adr_viewer.parse import Adr
+
+
+@dataclass
+class AdrTemplateConfig:
+    project_title: str
+    records: List[Adr]
+    include_mermaid: bool = False
 
 
 def render_html(config, template_dir_override=None) -> str:

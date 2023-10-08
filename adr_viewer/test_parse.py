@@ -62,3 +62,17 @@ def test_should_ignore_invalid_files():
     adr = parse_adr(markdown)
 
     assert adr is None
+
+
+def test_should_detect_mermaid():
+    markdown = open("test/adr/0005-has-mermaid.md").read()
+    adr = parse_adr(markdown)
+
+    assert adr.includes_mermaid
+
+
+def test_should_not_detect_mermaid():
+    markdown = open("test/adr/0004-proposed-status.md").read()
+    adr = parse_adr(markdown)
+
+    assert not adr.includes_mermaid

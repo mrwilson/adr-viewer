@@ -11,6 +11,7 @@ class Adr:
     status: str
     body: str
     index: int = 0
+    includes_mermaid: bool = False
 
 
 def extract_statuses_from_adr(page_object) -> Iterator[str]:
@@ -52,7 +53,14 @@ def parse_adr(content: str) -> Optional[Adr]:
 
     header = soup.find("h1")
 
+    includes_mermaid = soup.find(name="code", attrs={"class": "language-mermaid"})
+
     if header:
-        return Adr(header.text, status, adr_as_html)
+        return Adr(
+            title=header.text,
+            status=status,
+            body=adr_as_html,
+            includes_mermaid=includes_mermaid,
+        )
     else:
         return None

@@ -30,3 +30,15 @@ def test_should_render_html_with_collapsible_index():
     html = render_html({"records": [adr]})
 
     assert '<a data-toggle="collapse" href="#collapse123">Record 123</a>' in html
+
+
+def test_should_render_html_with_mermaid():
+    html = render_html({"include_mermaid": True})
+
+    assert "mermaid.min.js" in html
+
+
+def test_should_render_html_without_mermaid():
+    html = render_html({"include_mermaid": False})
+
+    assert "mermaid.min.js" not in html

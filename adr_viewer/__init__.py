@@ -21,6 +21,7 @@ def generate_content(path, template_dir_override=None, title=None) -> str:
     config = {
         "project_title": title if title else os.path.basename(os.getcwd()),
         "records": [],
+        "include_mermaid": False,
     }
 
     for index, adr_file in enumerate(files):
@@ -29,6 +30,8 @@ def generate_content(path, template_dir_override=None, title=None) -> str:
 
         if adr_attributes:
             adr_attributes.index = index
+            if not config["include_mermaid"]:
+                config["include_mermaid"] = adr_attributes.includes_mermaid
 
             config["records"].append(adr_attributes)
         else:

@@ -8,12 +8,10 @@ from adr_viewer.render import render_html, AdrTemplateConfig
 from adr_viewer.server import run_server
 
 
-def generate_content(path, template_dir_override=None, title=None) -> str:
+def generate_content(adrs: List[Adr], template_dir_override=None, title=None) -> str:
     config = AdrTemplateConfig(
         project_title=title if title else os.path.basename(os.getcwd()), records=[]
     )
-
-    adrs: List[Adr] = parse_adr_files("%s/*.md" % path)
 
     for index, adr in enumerate(adrs):
         adr.index = index
@@ -34,7 +32,9 @@ def generate_content(path, template_dir_override=None, title=None) -> str:
 @option('--template-dir',  default=None,         help='Template directory.',                     show_default=True)
 # fmt: on
 def main(adr_path, output, title, serve, port, template_dir) -> None:
-    content = generate_content(adr_path, template_dir, title)
+    adrs: List[Adr] = parse_adr_files("%s/*.md" % adr_path)
+
+    content = generate_content(adrs, template_dir, title)
 
     if serve:
         run_server(content, port)

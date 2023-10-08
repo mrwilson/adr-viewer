@@ -1,38 +1,25 @@
-import glob
 import os
 from typing import List
 
 from click import option, command
 
-from adr_viewer.parse import parse_adr
+from adr_viewer.parse import parse_adr, parse_adr_files, Adr
 from adr_viewer.render import render_html, AdrTemplateConfig
 from adr_viewer.server import run_server
 
 
-def get_adr_files(path) -> List[str]:
-    files = glob.glob(path)
-    files.sort()
-    return files
-
-
 def generate_content(path, template_dir_override=None, title=None) -> str:
-    files = get_adr_files("%s/*.md" % path)
-
     config = AdrTemplateConfig(
         project_title=title if title else os.path.basename(os.getcwd()), records=[]
     )
 
-    for index, adr_file in enumerate(files):
-        markdown = open(adr_file).read()
-        adr = parse_adr(markdown)
+    adrs: List[Adr] = parse_adr_files("%s/*.md" % path)
 
-        if adr:
-            adr.index = index
-            adr.includes_mermaid |= config.include_mermaid
+    for index, adr in enumerate(adrs):
+        adr.index = index
+        adr.includes_mermaid |= config.include_mermaid
 
-            config.records.append(adr)
-        else:
-            print("Could not parse %s in ADR format, ignoring." % adr_file)
+        config.records.append(adr)
 
     return render_html(config, template_dir_override)
 

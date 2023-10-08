@@ -1,4 +1,5 @@
-from typing import Iterator, Optional, Dict
+import glob
+from typing import Iterator, Optional, List
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
 
@@ -29,6 +30,26 @@ def extract_statuses_from_adr(page_object) -> Iterator[str]:
                 yield from (li.text for li in current_node.children if li.name == "li")
             else:
                 continue
+
+
+def parse_adr_files(path: str) -> List[Adr]:
+    files: List[str] = glob.glob(path)
+    files.sort()
+
+    adrs: List[Adr] = []
+
+    for file in files:
+        content = open(file).read()
+
+        adr = parse_adr(content)
+
+        if not adr:
+            print("Could not parse %s in ADR format, ignoring." % file)
+            continue
+
+        adrs.append(adr)
+
+    return adrs
 
 
 def parse_adr(content: str) -> Optional[Adr]:

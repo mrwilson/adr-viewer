@@ -14,7 +14,7 @@ class AdrTemplateConfig:
     include_mermaid: bool = False
 
 
-def render_html(config, template_dir_override=None) -> str:
+def render_html(config: AdrTemplateConfig, template_dir_override=None) -> str:
     loader: BaseLoader
 
     if template_dir_override:

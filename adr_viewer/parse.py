@@ -15,7 +15,7 @@ class Adr:
 
 
 def extract_statuses_from_adr(page_object) -> Iterator[str]:
-    status_section = page_object.find("h2", text="Status")
+    status_section = page_object.find("h2", string="Status")
 
     if status_section and status_section.nextSibling:
         current_node = status_section.nextSibling
@@ -53,7 +53,9 @@ def parse_adr(content: str) -> Optional[Adr]:
 
     header = soup.find("h1")
 
-    includes_mermaid = soup.find(name="code", attrs={"class": "language-mermaid"})
+    includes_mermaid = (
+        soup.find(name="code", attrs={"class": "language-mermaid"}) is not None
+    )
 
     if header:
         return Adr(

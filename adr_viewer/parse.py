@@ -1,4 +1,5 @@
-from typing import Iterator, Optional, Dict
+import glob
+from typing import Iterator, Optional, List
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
 
@@ -11,10 +12,11 @@ class Adr:
     status: str
     body: str
     index: int = 0
+    includes_mermaid: bool = False
 
 
 def extract_statuses_from_adr(page_object) -> Iterator[str]:
-    status_section = page_object.find("h2", text="Status")
+    status_section = page_object.find("h2", string="Status")
 
     if status_section and status_section.nextSibling:
         current_node = status_section.nextSibling
@@ -28,6 +30,26 @@ def extract_statuses_from_adr(page_object) -> Iterator[str]:
                 yield from (li.text for li in current_node.children if li.name == "li")
             else:
                 continue
+
+
+def parse_adr_files(path: str) -> List[Adr]:
+    files: List[str] = glob.glob(path)
+    files.sort()
+
+    adrs: List[Adr] = []
+
+    for file in files:
+        content = open(file).read()
+
+        adr = parse_adr(content)
+
+        if not adr:
+            print("Could not parse %s in ADR format, ignoring." % file)
+            continue
+
+        adrs.append(adr)
+
+    return adrs
 
 
 def parse_adr(content: str) -> Optional[Adr]:
@@ -52,7 +74,16 @@ def parse_adr(content: str) -> Optional[Adr]:
 
     header = soup.find("h1")
 
+    includes_mermaid = (
+        soup.find(name="code", attrs={"class": "language-mermaid"}) is not None
+    )
+
     if header:
-        return Adr(header.text, status, adr_as_html)
+        return Adr(
+            title=header.text,
+            status=status,
+            body=adr_as_html,
+            includes_mermaid=includes_mermaid,
+        )
     else:
         return None

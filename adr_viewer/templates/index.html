@@ -6,6 +6,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        {% if config.include_mermaid %}
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" async></script>
+        {% endif %}
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
         <title>ADR Viewer - {{ config.project_title }}</title>
 
@@ -94,7 +97,34 @@
             {% endfor %}
         </div>
         <footer>
-            Generated with <3 using ADR Viewer
+            Generated with &lt;3 using ADR Viewer
         </footer>
+        {% if config.include_mermaid %}
+        <script type="application/javascript">
+            window.addEventListener("load", function(){
+                if (window.mermaid != undefined) {
+                    mermaid.initialize({
+                        startOnLoad: false,
+                        securityLevel: 'loose',
+                        logLevel: 'error',
+                        wrap: true
+                    });
+                    {#
+                        We have to hook into the Bootstrap events in the way the docs prescribe.
+                        https://getbootstrap.com/docs/3.4/javascript/#collapse-events
+                    #}
+                    panels = document.querySelectorAll(".panel-collapse");
+                    Array.from(panels).forEach(function(panel){
+                        $(panel).on('show.bs.collapse', function(){
+                            selector = "#" + panel.id + ' .language-mermaid';
+                            mermaid.run({
+                                querySelector: selector,
+                            });
+                        });
+                    });
+                }
+            });
+        </script>
+        {% endif %}
     </body>
 </html>

@@ -11,7 +11,9 @@ CONVENTIONAL_ADR_DIR = "doc/adr/"
 DEFAULT_ADR_DIR_FILE = ".adr-dir"
 
 
-def resolve_adr_dir(maybe_dir: Optional[str] = None, adr_dir_file: str = DEFAULT_ADR_DIR_FILE):
+def resolve_adr_dir(
+    maybe_dir: Optional[str] = None, adr_dir_file: str = DEFAULT_ADR_DIR_FILE
+):
     """
     If passed something, blindly use it. Otherwise, resolve based on
     conventions in the ADR tooling ecosystem.

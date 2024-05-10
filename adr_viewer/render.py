@@ -2,10 +2,9 @@ import os
 from dataclasses import dataclass
 from typing import List
 
-from jinja2 import Environment, PackageLoader, select_autoescape
-from jinja2.loaders import FileSystemLoader, BaseLoader
-
 from adr_viewer.parse import Adr
+from jinja2 import Environment, PackageLoader, select_autoescape
+from jinja2.loaders import BaseLoader, FileSystemLoader
 
 
 @dataclass
@@ -40,7 +39,7 @@ def generate_content(adrs: List[Adr], template_dir_override=None, title=None) ->
 
     for index, adr in enumerate(adrs):
         adr.index = index
-        adr.includes_mermaid |= config.include_mermaid
+        config.include_mermaid |= adr.includes_mermaid
 
         config.records.append(adr)
 

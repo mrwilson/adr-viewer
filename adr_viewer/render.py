@@ -45,7 +45,3 @@ def generate_configuration(adrs: List[Adr], title=None):
         config.records.append(adr)
 
     return config
-
-
-def generate_content(adrs: List[Adr], template_dir_override=None, title=None) -> str:
-    return render_html(generate_configuration(adrs, title), template_dir_override)

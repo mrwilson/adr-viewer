@@ -7,7 +7,6 @@ from adr_viewer.render import (
     generate_configuration,
     render_html,
     AdrTemplateConfig,
-    generate_content,
 )
 from adr_viewer.server import run_server
 
@@ -24,7 +23,9 @@ from adr_viewer.server import run_server
 def main(adr_path, output, title, serve, port, template_dir) -> None:
     adrs: List[Adr] = parse_adr_files("%s/*.md" % adr_path)
 
-    content = generate_content(adrs, template_dir, title)
+    configuration = generate_configuration(adrs, title)
+
+    content = render_html(configuration, template_dir)
 
     if serve:
         run_server(content, port)

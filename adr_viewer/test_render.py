@@ -1,4 +1,4 @@
-from adr_viewer import render_html, AdrTemplateConfig
+from adr_viewer import generate_configuration, render_html, AdrTemplateConfig
 from adr_viewer.parse import Adr
 
 
@@ -46,3 +46,20 @@ def test_should_render_html_without_mermaid():
     )
 
     assert "mermaid.min.js" not in html
+
+
+def test_should_add_mermaid_dependency_to_overall_render():
+    adr = Adr("Record 123", "status", "content")
+    adr.includes_mermaid = True
+
+    config = generate_configuration(adrs=[adr], title="title")
+
+    assert config.include_mermaid
+
+
+def test_should_not_add_mermaid_dependency_to_overall_render_if_not_needed():
+    adr = Adr("Record 123", "status", "content")
+
+    config = generate_configuration(adrs=[adr], title="title")
+
+    assert not config.include_mermaid

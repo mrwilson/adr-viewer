@@ -3,7 +3,12 @@ from typing import List
 from click import option, command
 
 from adr_viewer.parse import parse_adr, parse_adr_files, Adr
-from adr_viewer.render import render_html, AdrTemplateConfig, generate_content
+from adr_viewer.render import (
+    generate_configuration,
+    render_html,
+    AdrTemplateConfig,
+    generate_content,
+)
 from adr_viewer.server import run_server
 
 

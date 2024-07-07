@@ -33,15 +33,19 @@ def render_html(config: AdrTemplateConfig, template_dir_override=None) -> str:
     return template.render(config=config)
 
 
-def generate_content(adrs: List[Adr], template_dir_override=None, title=None) -> str:
+def generate_configuration(adrs: List[Adr], title=None):
     config = AdrTemplateConfig(
         project_title=title if title else os.path.basename(os.getcwd()), records=[]
     )
 
     for index, adr in enumerate(adrs):
         adr.index = index
-        adr.includes_mermaid |= config.include_mermaid
+        config.include_mermaid |= adr.includes_mermaid
 
         config.records.append(adr)
 
-    return render_html(config, template_dir_override)
+    return config
+
+
+def generate_content(adrs: List[Adr], template_dir_override=None, title=None) -> str:
+    return render_html(generate_configuration(adrs, title), template_dir_override)

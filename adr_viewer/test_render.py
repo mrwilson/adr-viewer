@@ -63,3 +63,28 @@ def test_should_not_add_mermaid_dependency_to_overall_render_if_not_needed():
     config = generate_configuration(adrs=[adr], title="title")
 
     assert not config.include_mermaid
+
+def test_should_render_html_with_dark_mode():
+    html = render_html(
+        AdrTemplateConfig(project_title="my-project", records=[])
+    )
+
+    assert 'dark-mode-toggle' in html
+
+def test_should_render_html_with_theme_support():
+    html = render_html(
+        AdrTemplateConfig(project_title="my-project", records=[])
+    )
+
+    # Check that CSS variables for theming are defined
+    assert '--bg-color:' in html
+    assert '--text-color:' in html
+    assert '[data-theme="dark"]' in html
+
+    # Check that toggle button is present
+    assert 'id="theme-toggle"' in html
+    assert 'theme-toggle' in html
+
+    # Check that JavaScript for theme switching is included
+    assert 'setTheme' in html
+    assert 'localStorage.getItem(\'theme\')' in html

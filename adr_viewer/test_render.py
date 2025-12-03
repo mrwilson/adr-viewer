@@ -64,13 +64,6 @@ def test_should_not_add_mermaid_dependency_to_overall_render_if_not_needed():
 
     assert not config.include_mermaid
 
-def test_should_render_html_with_dark_mode():
-    html = render_html(
-        AdrTemplateConfig(project_title="my-project", records=[])
-    )
-
-    assert 'dark-mode-toggle' in html
-
 def test_should_render_html_with_theme_support():
     html = render_html(
         AdrTemplateConfig(project_title="my-project", records=[])

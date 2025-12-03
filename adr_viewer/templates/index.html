@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light dark">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -13,6 +14,27 @@
         <title>ADR Viewer - {{ config.project_title }}</title>
 
         <style type="text/css">
+            :root {
+                color-scheme: light dark;
+                --bg-color: white;
+                --text-color: black;
+                --panel-bg: #f5f5f5;
+                --panel-border: #ddd;
+                --heading-bg: #f5f5f5;
+                --link-color: #337ab7;
+                --muted-text: #777;
+            }
+
+            [data-theme="dark"] {
+                --bg-color: #121212;
+                --text-color: #ffffff;
+                --panel-bg: #1e1e1e;
+                --panel-border: #333;
+                --heading-bg: #2a2a2a;
+                --link-color: #4dabf7;
+                --muted-text: #ccc;
+            }
+
             body {
                 display: grid;
                 width: auto;
@@ -20,6 +42,24 @@
                 align-items: center;
                 justify-items: center;
                 grid-template-rows: 2fr minmax(80%, auto) 2fr;
+                background-color: var(--bg-color);
+                color: var(--text-color);
+            }
+
+            header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: none;
+                border: none;
+                font-size: 1.5em;
+                cursor: pointer;
+                color: var(--text-color);
             }
 
             @media only screen and (min-width: 1025px) {
@@ -36,24 +76,68 @@
                 width: 100%
             }
 
+            .panel {
+                background-color: var(--panel-bg);
+                border: 1px solid var(--panel-border);
+                border-radius: 4px;
+                margin-bottom: 20px;
+            }
+
+            .panel-heading {
+                background-color: var(--heading-bg);
+                border-bottom: 1px solid var(--panel-border);
+                padding: 10px 15px;
+            }
+
+            .panel-body {
+                background-color: var(--panel-bg);
+                color: var(--text-color);
+                padding: 15px;
+            }
+
             .panel-heading.adr-accepted {
                 background-color: lightgreen;
+            }
+
+            [data-theme="dark"] .panel-heading.adr-accepted {
+                background-color: #155724;
+                color: #d4edda;
             }
 
             .panel-heading.adr-superseded {
                 background-color: lightgrey;
             }
 
+            [data-theme="dark"] .panel-heading.adr-superseded {
+                background-color: #383d41;
+                color: #d6d8db;
+            }
+
             .panel-heading.adr-amended {
                 background-color: yellow;
+            }
+
+            [data-theme="dark"] .panel-heading.adr-amended {
+                background-color: #856404;
+                color: #fff3cd;
             }
 
             .panel-heading.adr-unknown {
                 background-color: white;
             }
 
+            [data-theme="dark"] .panel-heading.adr-unknown {
+                background-color: #818182;
+                color: #fefefe;
+            }
+
             .panel-heading.adr-pending {
                 background-color: lightblue;
+            }
+
+            [data-theme="dark"] .panel-heading.adr-pending {
+                background-color: #0c5460;
+                color: #d1ecf1;
             }
 
             .adr-superseded > .panel-title > a {
@@ -67,6 +151,7 @@
     </head>
     <body>
         <header>
+            <button class="theme-toggle dark-mode-toggle" id="theme-toggle" title="Toggle theme"></button>
             <h1>ADR Viewer - {{ config.project_title }}</h1>
         </header>
         <div class="panel-group">
@@ -126,5 +211,35 @@
             });
         </script>
         {% endif %}
+        <script>
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            const initialTheme = body.getAttribute('data-theme') || savedTheme;
+
+            function setTheme(theme) {
+                body.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+            }
+
+            setTheme(initialTheme);
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                setTheme(newTheme);
+            });
+
+            // Listen for system theme changes
+            if (window.matchMedia) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem('theme')) {
+                        setTheme(e.matches ? 'dark' : 'light');
+                    }
+                });
+            }
+        </script>
     </body>
 </html>

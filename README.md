@@ -28,6 +28,27 @@ $ brew install adr-viewer
 
 See also the [`adr-viewer` formula page](https://formulae.brew.sh/formula/adr-viewer).
 
+### With Docker
+
+`adr-viewer` has the `Dockerfile` defined. You can build and run with Docker:
+
+```bash
+$ docker build adr-viewer .
+$ docker run -p 8000:8000 -v "/path/to/your/adr/docs:/app/doc/adr" adr-viewer
+```
+
+You can also define `docker-compose.yml` to build and run the tool:
+
+```yaml
+services:
+  adr-viewer:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - /path/to/your/adr/docs:/app/doc/adr
+```
+
 ### From local build
 
 adr-viewer requires Python 3.7 or higher (with Pip)
